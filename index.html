@@ -1,0 +1,2207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Sheshagiri RB — ECE Engineer, Embedded Systems Enthusiast, IoT Developer"/>
+<title>Sheshagiri RB — ECE Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+/* ============================================================
+   DESIGN SYSTEM — F1 RED BULL / SCUDERIA ENERGY THEME
+   Primary: Deep Racing Red  Accent: Titanium White + Carbon
+   ============================================================ */
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0a0a0b;
+  --bg2:#0f0f10;
+  --bg3:#141416;
+  --bg4:#1a1a1d;
+  --red:#CC0000;
+  --red-bright:#FF0000;
+  --red-glow:rgba(204,0,0,0.35);
+  --red-dim:rgba(204,0,0,0.12);
+  --white:#F5F5F5;
+  --silver:#A8A8B3;
+  --carbon:#1E1E22;
+  --gold:#C9A84C;
+  --border:#222225;
+  --border2:#2a2a2e;
+  --text:#ECECEC;
+  --muted:#707080;
+  --font-head:'Orbitron',sans-serif;
+  --font-body:'Rajdhani',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);overflow-x:hidden;font-size:16px;line-height:1.6;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--red);}
+
+/* SCROLL PROGRESS — Red racing stripe */
+#scroll-progress{
+  position:fixed;top:0;left:0;height:3px;
+  background:linear-gradient(90deg,#CC0000,#FF4444,#FF0000);
+  z-index:9999;width:0%;
+  box-shadow:0 0 10px var(--red-glow);
+  transition:width .05s;
+}
+
+/* ============================================================
+   LOADING SCREEN
+   ============================================================ */
+#loading-screen{
+  position:fixed;inset:0;background:var(--bg);z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:1.5rem;transition:opacity .8s ease;
+}
+#loading-screen.hide{opacity:0;pointer-events:none;}
+.load-f1{
+  display:flex;flex-direction:column;align-items:center;gap:1rem;
+}
+.load-name{
+  font-family:var(--font-head);font-size:2.2rem;color:var(--white);
+  letter-spacing:8px;text-transform:uppercase;
+}
+.load-name span{color:var(--red);}
+.load-sub{
+  font-family:var(--font-mono);font-size:.65rem;color:var(--silver);
+  letter-spacing:4px;text-transform:uppercase;
+}
+.load-bar-wrap{
+  width:280px;height:2px;background:var(--border2);
+  position:relative;overflow:hidden;
+}
+.load-bar-fill{
+  height:100%;background:linear-gradient(90deg,var(--red),#FF4444);
+  animation:loadRace 2s cubic-bezier(.4,0,.2,1) forwards;
+  box-shadow:0 0 12px var(--red-glow);
+}
+@keyframes loadRace{from{width:0;}to{width:100%;}}
+.load-speed{
+  font-family:var(--font-mono);font-size:.6rem;color:var(--red);
+  letter-spacing:2px;animation:blinkRed 1s infinite;
+}
+@keyframes blinkRed{0%,100%{opacity:1;}50%{opacity:.2;}}
+
+/* Car SVG loading icon */
+.load-car{
+  font-size:3rem;color:var(--red);
+  animation:carZoom 1.5s ease-in-out infinite alternate;
+}
+@keyframes carZoom{from{transform:translateX(-20px);}to{transform:translateX(20px);}}
+
+/* ============================================================
+   CUSTOM CURSOR
+   ============================================================ */
+.cur{
+  width:10px;height:10px;background:var(--red);border-radius:50%;
+  position:fixed;pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);transition:transform .08s;
+  box-shadow:0 0 8px var(--red-glow);
+}
+.cur-ring{
+  width:36px;height:36px;
+  border:1px solid rgba(204,0,0,.5);border-radius:50%;
+  position:fixed;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:width .3s,height .3s,opacity .3s,border-color .3s;
+}
+.cur-ring.big{width:52px;height:52px;border-color:var(--red);opacity:.6;}
+@media(pointer:coarse){.cur,.cur-ring{display:none;}}
+
+/* BACK TO TOP */
+#back-top{
+  position:fixed;bottom:2rem;right:2rem;z-index:500;
+  width:46px;height:46px;
+  background:var(--red);color:#fff;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+  opacity:0;transform:translateY(20px);transition:all .3s;pointer-events:none;
+  clip-path:polygon(0 20%,20% 0,100% 0,100% 80%,80% 100%,0 100%);
+}
+#back-top.visible{opacity:1;transform:translateY(0);pointer-events:all;}
+#back-top:hover{background:var(--red-bright);transform:translateY(-4px);box-shadow:0 8px 24px var(--red-glow);}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  padding:.9rem 4rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(10,10,11,0.96);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:all .4s;
+}
+nav::after{
+  content:'';position:absolute;bottom:0;left:0;
+  width:100%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--red),transparent);
+  opacity:.5;
+}
+.nav-logo{
+  font-family:var(--font-head);font-size:1.1rem;color:var(--white);
+  letter-spacing:3px;text-decoration:none;display:flex;align-items:center;gap:.6rem;
+}
+.nav-logo .logo-flag{
+  display:inline-flex;gap:2px;align-items:center;
+}
+.nav-logo .flag-stripe{width:4px;height:18px;border-radius:1px;}
+.nav-logo .fs1{background:var(--red);}
+.nav-logo .fs2{background:var(--white);opacity:.9;}
+.nav-logo .fs3{background:var(--red);}
+
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{
+  color:var(--muted);text-decoration:none;
+  font-family:var(--font-mono);font-size:.62rem;
+  letter-spacing:2px;text-transform:uppercase;
+  transition:color .25s;position:relative;padding-bottom:4px;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;left:0;
+  width:0;height:1px;background:var(--red);
+  transition:width .3s;box-shadow:0 0 6px var(--red-glow);
+}
+.nav-links a:hover,.nav-links a.active{color:var(--white);}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+
+.nav-number{
+  font-family:var(--font-mono);font-size:.55rem;
+  color:var(--red);margin-right:.2rem;
+}
+
+/* HAMBURGER */
+.hamburger{
+  display:none;flex-direction:column;gap:5px;
+  cursor:pointer;background:none;border:none;padding:.5rem;
+}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);transition:all .3s;}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+.mobile-menu{
+  display:none;position:fixed;top:60px;left:0;right:0;
+  background:rgba(10,10,11,.98);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);z-index:199;
+  padding:2rem;flex-direction:column;gap:1.5rem;
+}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{
+  color:var(--muted);text-decoration:none;
+  font-family:var(--font-mono);font-size:.8rem;
+  letter-spacing:2px;text-transform:uppercase;transition:color .25s;
+}
+.mobile-menu a:hover{color:var(--red);}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+#hero{
+  min-height:100vh;position:relative;
+  display:flex;align-items:center;
+  padding:0 5rem;overflow:hidden;
+}
+
+/* Track canvas */
+#bg-canvas{position:absolute;inset:0;z-index:0;}
+
+/* Carbon fiber texture overlay */
+.hero-carbon{
+  position:absolute;inset:0;z-index:1;opacity:.04;
+  background-image:
+    repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%),
+    repeating-linear-gradient(-45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);
+  background-size:16px 16px;
+}
+
+/* Speed lines */
+.speed-lines{
+  position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;
+}
+.speed-line{
+  position:absolute;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(204,0,0,.3),transparent);
+  animation:speedLine 3s linear infinite;
+  opacity:0;
+}
+@keyframes speedLine{
+  0%{transform:translateX(-100%);opacity:0;}
+  10%{opacity:1;}
+  90%{opacity:.5;}
+  100%{transform:translateX(200%);opacity:0;}
+}
+
+/* Red glow blob */
+.hero-glow{
+  position:absolute;right:-10%;top:10%;width:600px;height:600px;
+  background:radial-gradient(circle,rgba(204,0,0,.12) 0%,transparent 70%);
+  z-index:1;pointer-events:none;
+  animation:glowPulse 4s ease-in-out infinite alternate;
+}
+@keyframes glowPulse{from{opacity:.6;}to{opacity:1;}}
+
+/* Race number */
+.hero-race-num{
+  position:absolute;right:5rem;top:50%;transform:translateY(-50%);
+  font-family:var(--font-head);font-size:clamp(12rem,20vw,22rem);
+  color:rgba(204,0,0,.04);line-height:1;
+  z-index:1;pointer-events:none;
+  letter-spacing:-10px;
+  animation:numFloat 6s ease-in-out infinite alternate;
+}
+@keyframes numFloat{from{transform:translateY(-50%) scale(1);}to{transform:translateY(-52%) scale(1.02);}}
+
+.hero-content{position:relative;z-index:3;max-width:700px;}
+
+.hero-flag-strip{
+  display:flex;gap:3px;margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp .6s .1s forwards;
+}
+.hfs{width:28px;height:4px;border-radius:1px;}
+.hfs-r{background:var(--red);}
+.hfs-w{background:rgba(255,255,255,.6);}
+.hfs-d{background:var(--border2);}
+
+.hero-tag{
+  font-family:var(--font-mono);font-size:.65rem;color:var(--red);
+  letter-spacing:4px;text-transform:uppercase;margin-bottom:1rem;
+  opacity:0;animation:fadeUp .6s .2s forwards;
+  display:flex;align-items:center;gap:.75rem;
+}
+.hero-tag::before{content:'';width:20px;height:1px;background:var(--red);box-shadow:0 0 6px var(--red-glow);}
+
+.hero-name{
+  font-family:var(--font-head);
+  font-size:clamp(3.5rem,8vw,7.5rem);
+  line-height:.9;color:var(--white);
+  margin-bottom:1.25rem;
+  opacity:0;animation:fadeUp .7s .35s forwards;
+  letter-spacing:1px;
+  text-shadow:0 0 60px rgba(204,0,0,.15);
+}
+.hero-name .surname{
+  display:block;color:var(--red);
+  text-shadow:0 0 40px rgba(204,0,0,.4);
+}
+
+.hero-divider{
+  display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;
+  opacity:0;animation:fadeUp .6s .5s forwards;
+}
+.hd-line{flex:1;height:1px;background:linear-gradient(90deg,var(--red),transparent);}
+.hd-icon{font-size:.9rem;color:var(--red);}
+
+.hero-title{
+  font-family:var(--font-mono);font-size:.65rem;color:var(--red);
+  letter-spacing:3px;text-transform:uppercase;
+  margin-bottom:.6rem;opacity:0;animation:fadeUp .6s .55s forwards;
+}
+.hero-role{
+  font-family:var(--font-mono);font-size:1rem;color:var(--silver);
+  opacity:0;animation:fadeUp .6s .65s forwards;margin-bottom:.4rem;
+  min-height:1.5rem;
+}
+.tw{
+  color:var(--white);border-right:2px solid var(--red);
+  padding-right:3px;animation:blink .8s infinite;
+}
+@keyframes blink{0%,100%{border-color:var(--red);}50%{border-color:transparent;}}
+
+.hero-tagline{
+  color:var(--muted);font-size:.95rem;line-height:1.9;max-width:520px;
+  margin:1.25rem 0 2rem;opacity:0;animation:fadeUp .6s .8s forwards;
+  font-weight:400;
+}
+
+/* SPEC TABLE — like F1 car specs */
+.hero-specs{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  border:1px solid var(--border2);margin-bottom:2rem;
+  opacity:0;animation:fadeUp .6s .9s forwards;
+  background:var(--border);
+}
+.spec-item{
+  background:var(--bg2);padding:.8rem 1rem;
+  text-align:center;
+  transition:background .3s;
+}
+.spec-item:hover{background:var(--bg3);}
+.spec-val{
+  font-family:var(--font-head);font-size:1.4rem;color:var(--red);
+  display:block;line-height:1;
+}
+.spec-lbl{
+  font-family:var(--font-mono);font-size:.52rem;color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;margin-top:.3rem;
+}
+
+.hero-btns{
+  display:flex;gap:1rem;
+  opacity:0;animation:fadeUp .6s 1s forwards;flex-wrap:wrap;
+}
+.btn-p{
+  padding:.8rem 2rem;background:var(--red);color:#fff;
+  font-family:var(--font-mono);font-size:.68rem;font-weight:600;
+  letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;
+  transition:all .3s;text-decoration:none;
+  display:inline-flex;align-items:center;gap:.5rem;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+  position:relative;overflow:hidden;
+}
+.btn-p::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.1),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.btn-p:hover{background:var(--red-bright);box-shadow:0 8px 30px var(--red-glow);transform:translateY(-2px);}
+.btn-p:hover::before{opacity:1;}
+
+.btn-o{
+  padding:.8rem 2rem;background:transparent;color:var(--white);
+  font-family:var(--font-mono);font-size:.68rem;
+  letter-spacing:2px;text-transform:uppercase;
+  border:1px solid rgba(255,255,255,.2);cursor:pointer;
+  transition:all .3s;text-decoration:none;
+  display:inline-flex;align-items:center;gap:.5rem;
+}
+.btn-o:hover{border-color:var(--red);color:var(--red);box-shadow:inset 0 0 20px var(--red-dim);}
+
+.btn-s{
+  padding:.8rem 2rem;background:transparent;color:var(--muted);
+  font-family:var(--font-mono);font-size:.68rem;
+  letter-spacing:2px;text-transform:uppercase;
+  border:1px solid var(--border2);cursor:pointer;
+  transition:all .3s;text-decoration:none;
+  display:inline-flex;align-items:center;gap:.5rem;
+}
+.btn-s:hover{border-color:var(--red);color:var(--white);}
+
+/* Scroll indicator */
+.hero-scroll{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  opacity:0;animation:fadeUp .6s 1.4s forwards;
+}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--red),transparent);animation:scrollPulse 2s infinite;}
+@keyframes scrollPulse{0%,100%{opacity:1;}50%{opacity:.2;}}
+.scroll-lbl{font-family:var(--font-mono);font-size:.55rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+/* ============================================================
+   SIDEBAR + SOCIAL STRIP
+   ============================================================ */
+.sidebar{
+  position:fixed;left:1.2rem;top:50%;transform:translateY(-50%);
+  z-index:100;display:flex;flex-direction:column;align-items:center;gap:1.1rem;
+}
+.sidebar::before,.sidebar::after{content:'';width:1px;height:60px;background:var(--border2);}
+.sidebar a{
+  color:var(--muted);text-decoration:none;
+  font-family:var(--font-mono);font-size:.56rem;letter-spacing:2.5px;
+  writing-mode:vertical-rl;transition:color .3s;
+}
+.sidebar a:hover{color:var(--red);}
+
+.social-strip{
+  position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);
+  z-index:100;display:flex;flex-direction:column;align-items:center;gap:.8rem;
+}
+.social-strip::before,.social-strip::after{content:'';width:1px;height:50px;background:var(--border2);}
+.social-strip a{
+  width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+  color:var(--muted);border:1px solid var(--border2);font-size:.85rem;
+  transition:all .3s;position:relative;
+}
+.social-strip a:hover{color:var(--red);border-color:var(--red);background:var(--red-dim);transform:translateY(-3px);box-shadow:0 4px 16px var(--red-glow);}
+.social-strip a .tip{
+  position:absolute;right:calc(100% + 12px);
+  background:var(--bg3);border:1px solid var(--border2);
+  color:var(--red);font-family:var(--font-mono);font-size:.55rem;
+  letter-spacing:1px;padding:.25rem .6rem;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.social-strip a:hover .tip{opacity:1;}
+
+/* ============================================================
+   SECTION COMMONS
+   ============================================================ */
+section{padding:7rem 5rem;}
+.sec-tag{
+  font-family:var(--font-mono);font-size:.62rem;color:var(--red);
+  letter-spacing:3px;text-transform:uppercase;margin-bottom:.7rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.sec-tag::before{content:'';width:16px;height:1px;background:var(--red);}
+.sec-title{
+  font-family:var(--font-head);font-size:clamp(2.4rem,5vw,4rem);
+  color:var(--white);line-height:1;margin-bottom:.8rem;letter-spacing:1px;
+}
+.sec-title span{color:var(--red);}
+.sec-line{
+  width:60px;height:2px;background:var(--red);
+  margin-bottom:3.5rem;box-shadow:0 0 10px var(--red-glow);
+}
+
+/* REVEAL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s ease,transform .8s ease;}
+.reveal-left.visible{opacity:1;transform:translateX(0);}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s ease,transform .8s ease;}
+.reveal-right.visible{opacity:1;transform:translateX(0);}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+.reveal-delay-4{transition-delay:.4s;}
+
+/* ============================================================
+   STATS BANNER — Race Telemetry Style
+   ============================================================ */
+.stats-banner{
+  background:var(--bg2);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:2.5rem 5rem;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--border);
+}
+.stat-box{
+  background:var(--bg2);text-align:center;padding:2rem 1rem;
+  position:relative;overflow:hidden;transition:background .3s;
+}
+.stat-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--red);opacity:0;transition:opacity .3s;
+  box-shadow:0 0 10px var(--red-glow);
+}
+.stat-box:hover{background:var(--bg3);}
+.stat-box:hover::before{opacity:1;}
+.stat-box .num{
+  font-family:var(--font-head);font-size:3rem;color:var(--red);
+  display:block;line-height:1;
+}
+.stat-box .lbl{
+  font-family:var(--font-mono);font-size:.58rem;color:var(--muted);
+  letter-spacing:2px;text-transform:uppercase;margin-top:.4rem;
+}
+
+/* ============================================================
+   ABOUT SECTION
+   ============================================================ */
+#about{background:var(--bg2);position:relative;overflow:hidden;}
+#about::before{
+  content:'';position:absolute;right:-15%;top:-10%;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(204,0,0,.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* Racing stripe decoration */
+#about::after{
+  content:'';position:absolute;left:0;top:0;
+  width:4px;height:100%;
+  background:linear-gradient(to bottom,transparent,var(--red),transparent);
+  opacity:.4;
+}
+
+.about-grid{display:grid;grid-template-columns:340px 1fr;gap:5rem;align-items:start;}
+
+.photo-wrap{position:relative;width:300px;}
+.photo-frame{
+  width:300px;height:360px;position:relative;overflow:hidden;
+  border:1px solid var(--border2);
+}
+.photo-frame img{
+  width:100%;height:100%;object-fit:cover;object-position:top center;
+  display:block;filter:grayscale(10%) contrast(1.1) brightness(.95);
+  transition:filter .4s;
+}
+.photo-frame:hover img{filter:grayscale(0%) contrast(1.05);}
+.photo-frame::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 50%,rgba(10,10,11,.6));
+  pointer-events:none;
+}
+
+/* F1-style corner brackets */
+.photo-corner{position:absolute;width:20px;height:20px;border-color:var(--red);border-style:solid;z-index:2;}
+.pc-tl{top:-1px;left:-1px;border-width:2px 0 0 2px;box-shadow:-2px -2px 8px var(--red-glow);}
+.pc-tr{top:-1px;right:-1px;border-width:2px 2px 0 0;box-shadow:2px -2px 8px var(--red-glow);}
+.pc-bl{bottom:-1px;left:-1px;border-width:0 0 2px 2px;box-shadow:-2px 2px 8px var(--red-glow);}
+.pc-br{bottom:-1px;right:-1px;border-width:0 2px 2px 0;box-shadow:2px 2px 8px var(--red-glow);}
+
+.photo-badge{
+  position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);
+  background:var(--red);color:#fff;
+  font-family:var(--font-mono);font-size:.58rem;letter-spacing:2px;
+  text-transform:uppercase;padding:.4rem 1.2rem;white-space:nowrap;
+  box-shadow:0 4px 16px var(--red-glow);
+}
+
+.about-details p{
+  color:var(--muted);line-height:1.9;margin-bottom:1.5rem;
+  font-size:.95rem;font-weight:400;
+}
+
+/* Info grid — like a driver's data panel */
+.about-info{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  margin-bottom:2rem;border:1px solid var(--border);
+  background:var(--border);
+}
+.info-item{
+  font-family:var(--font-mono);font-size:.75rem;
+  background:var(--bg3);padding:.9rem 1rem;
+}
+.info-lbl{
+  color:var(--red);display:block;margin-bottom:.25rem;
+  font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;
+}
+.info-val{color:var(--white);font-weight:500;}
+
+.about-stats{
+  display:flex;gap:2.5rem;margin-top:2rem;
+  padding-top:1.5rem;border-top:1px solid var(--border);
+}
+.a-stat .num{
+  font-family:var(--font-head);font-size:2.4rem;color:var(--red);
+  display:block;line-height:1;text-shadow:0 0 20px var(--red-glow);
+}
+.a-stat .lbl{
+  font-family:var(--font-mono);font-size:.56rem;color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;margin-top:.3rem;
+}
+
+/* ============================================================
+   SKILLS SECTION — Tire compounds style
+   ============================================================ */
+#skills{background:var(--bg);}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);}
+.skill-cat{
+  background:var(--bg2);padding:1.75rem;
+  transition:background .3s,transform .3s;
+  position:relative;overflow:hidden;
+}
+.skill-cat::before{
+  content:'';position:absolute;top:0;left:0;
+  width:3px;height:0;background:var(--red);
+  transition:height .4s;box-shadow:0 0 10px var(--red-glow);
+}
+.skill-cat:hover{background:var(--bg3);}
+.skill-cat:hover::before{height:100%;}
+
+.skill-cat-title{
+  font-family:var(--font-mono);font-size:.62rem;color:var(--red);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:1.25rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.skill-cat-title i{font-size:.9rem;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.45rem;}
+.skill-tag{
+  font-family:var(--font-mono);font-size:.66rem;color:var(--muted);
+  border:1px solid var(--border2);padding:.3rem .75rem;
+  transition:all .25s;cursor:default;
+  clip-path:polygon(4px 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%,0 4px);
+}
+.skill-tag:hover{color:var(--white);border-color:var(--red);background:var(--red-dim);box-shadow:0 0 8px var(--red-glow);}
+
+/* ============================================================
+   PROJECTS SECTION — Pit Box Display
+   ============================================================ */
+#projects{background:var(--bg2);}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:1px;background:var(--border);}
+.proj-card{
+  background:var(--bg3);transition:all .4s;
+  position:relative;overflow:hidden;cursor:pointer;
+}
+.proj-card::before{
+  content:'';position:absolute;top:0;left:0;
+  width:0;height:3px;background:var(--red);
+  transition:width .5s;box-shadow:0 0 12px var(--red-glow);
+}
+.proj-card:hover{background:var(--bg4);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.5);}
+.proj-card:hover::before{width:100%;}
+
+.proj-img{
+  width:100%;height:200px;background:var(--bg4);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+
+/* SVG project illustrations */
+.proj-illustration{
+  width:100%;height:100%;display:flex;align-items:center;
+  justify-content:center;position:relative;
+}
+
+/* Footstep / Energy project */
+.proj-energy{
+  background:linear-gradient(135deg,#0a0a0b 0%,#1a0505 50%,#0a0a0b 100%);
+}
+
+/* Antenna project */
+.proj-antenna{
+  background:linear-gradient(135deg,#0a0a0b 0%,#05101a 50%,#0a0a0b 100%);
+}
+
+/* Hackathon project */
+.proj-hack{
+  background:linear-gradient(135deg,#0a0a0b 0%,#0d0a00 50%,#0a0a0b 100%);
+}
+
+.proj-img-svg{width:80%;height:80%;}
+
+.proj-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 40%,rgba(10,10,11,.9));
+}
+.proj-body{padding:1.75rem;}
+.proj-num{
+  font-family:var(--font-head);font-size:5rem;
+  color:rgba(204,0,0,.04);position:absolute;top:.5rem;right:.75rem;
+  line-height:1;pointer-events:none;
+}
+.proj-tag{
+  font-family:var(--font-mono);font-size:.58rem;color:var(--red);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:.75rem;
+}
+.proj-title{font-family:var(--font-head);font-size:1rem;color:var(--white);margin-bottom:.75rem;line-height:1.3;letter-spacing:.5px;}
+.proj-desc{color:var(--muted);font-size:.88rem;line-height:1.8;margin-bottom:1.5rem;font-weight:400;}
+.tech-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.5rem;}
+.tc{
+  font-family:var(--font-mono);font-size:.58rem;
+  background:var(--red-dim);color:var(--red);
+  border:1px solid rgba(204,0,0,.2);padding:.2rem .65rem;
+  letter-spacing:.5px;
+}
+.proj-links{display:flex;gap:.75rem;}
+.proj-link{
+  font-family:var(--font-mono);font-size:.62rem;color:var(--muted);
+  text-decoration:none;letter-spacing:1px;text-transform:uppercase;
+  transition:all .3s;display:flex;align-items:center;gap:.4rem;
+  padding:.4rem .85rem;border:1px solid var(--border2);
+}
+.proj-link:hover{color:var(--red);border-color:var(--red);box-shadow:inset 0 0 12px var(--red-dim);}
+
+/* ============================================================
+   ACADEMICS — Telemetry Data Display
+   ============================================================ */
+#academics{background:var(--bg);}
+.acad-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;align-items:start;}
+
+.cgpa-box{
+  text-align:center;padding:3rem 2rem;
+  background:var(--bg2);border:1px solid var(--border);
+  margin-bottom:1.5rem;position:relative;overflow:hidden;
+}
+.cgpa-box::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 50%,rgba(204,0,0,.06),transparent 70%);
+}
+.cgpa-box::after{
+  content:'CGPA';position:absolute;
+  font-family:var(--font-head);font-size:8rem;
+  color:rgba(204,0,0,.025);top:50%;left:50%;
+  transform:translate(-50%,-50%);letter-spacing:4px;
+  pointer-events:none;
+}
+.cgpa-num{
+  font-family:var(--font-head);font-size:6.5rem;color:var(--red);
+  display:block;line-height:1;position:relative;
+  text-shadow:0 0 40px var(--red-glow);
+}
+.cgpa-lbl{
+  font-family:var(--font-mono);font-size:.6rem;color:var(--muted);
+  letter-spacing:2.5px;text-transform:uppercase;margin-top:.75rem;position:relative;
+}
+
+.sem-chart{
+  background:var(--bg2);border:1px solid var(--border);padding:1.75rem;
+}
+.sem-chart-title{
+  font-family:var(--font-mono);font-size:.6rem;color:var(--red);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:1.75rem;
+}
+.chart-bars{display:flex;align-items:flex-end;gap:1.5rem;height:140px;}
+.cbw{display:flex;flex-direction:column;align-items:center;flex:1;gap:.5rem;height:100%;}
+.cb{width:100%;background:var(--border2);position:relative;flex:1;}
+.cbf{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(to top,var(--red),rgba(255,68,68,.6));
+  transition:height 1.4s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 -4px 16px var(--red-glow);
+}
+.cb-lbl{font-family:var(--font-mono);font-size:.54rem;color:var(--muted);}
+.cb-val{font-family:var(--font-mono);font-size:.6rem;color:var(--red);}
+
+/* Subject progress bars */
+.subj-bars{display:flex;flex-direction:column;gap:1.2rem;}
+.subj-item .subj-hdr{display:flex;justify-content:space-between;margin-bottom:.5rem;align-items:center;}
+.subj-name{font-family:var(--font-mono);font-size:.7rem;color:var(--silver);}
+.subj-score{
+  font-family:var(--font-head);font-size:.9rem;color:var(--red);
+}
+.bar-track{
+  height:3px;background:var(--border2);
+  position:relative;overflow:hidden;
+}
+.bar-fill{
+  position:absolute;top:0;left:0;height:100%;width:0;
+  background:linear-gradient(90deg,var(--red),#FF4444);
+  transition:width 1.4s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 0 8px var(--red-glow);
+}
+.acad-note{
+  background:var(--bg2);border-left:3px solid var(--red);
+  padding:1rem 1.25rem;font-family:var(--font-mono);
+  font-size:.72rem;color:var(--muted);line-height:1.8;margin-top:1.5rem;
+  box-shadow:-4px 0 20px var(--red-dim);
+}
+
+/* ============================================================
+   ACHIEVEMENTS — Race Podium Timeline
+   ============================================================ */
+#achievements{background:var(--bg2);}
+.timeline{position:relative;padding-left:2rem;}
+.timeline::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:2px;background:linear-gradient(to bottom,transparent,var(--red),transparent);
+  box-shadow:0 0 10px var(--red-glow);
+}
+.tl-item{
+  position:relative;padding:1.5rem 0 1.5rem 2.5rem;
+  border-bottom:1px solid var(--border);
+}
+.tl-item:last-child{border-bottom:none;}
+.tl-dot{
+  position:absolute;left:-7px;top:1.8rem;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--red);border:2px solid var(--bg2);
+  box-shadow:0 0 12px var(--red-glow);
+  transition:transform .3s;
+}
+.tl-item:hover .tl-dot{transform:scale(1.4);}
+.tl-date{
+  font-family:var(--font-mono);font-size:.6rem;color:var(--red);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:.4rem;
+}
+.tl-title{
+  font-family:var(--font-head);font-size:.95rem;color:var(--white);
+  margin-bottom:.5rem;letter-spacing:.5px;
+}
+.tl-desc{
+  color:var(--muted);font-size:.88rem;line-height:1.8;
+  margin-bottom:.75rem;font-weight:400;
+}
+.tl-badge{
+  font-family:var(--font-mono);font-size:.58rem;color:var(--red);
+  border:1px solid rgba(204,0,0,.3);padding:.2rem .75rem;
+  letter-spacing:1.5px;text-transform:uppercase;
+  background:var(--red-dim);
+}
+
+/* ============================================================
+   CERTIFICATIONS — Race License Cards
+   ============================================================ */
+#certifications{background:var(--bg);}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);}
+.cert-card{
+  background:var(--bg2);padding:1.75rem;
+  transition:all .3s;position:relative;overflow:hidden;cursor:pointer;
+}
+.cert-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--red-dim),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.cert-card:hover{background:var(--bg3);}
+.cert-card:hover::after{opacity:1;}
+.cert-icon{
+  width:44px;height:44px;background:var(--red-dim);
+  border:1px solid rgba(204,0,0,.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:var(--red);margin-bottom:1.25rem;
+  transition:all .3s;position:relative;z-index:1;
+}
+.cert-card:hover .cert-icon{background:var(--red);color:#fff;box-shadow:0 4px 16px var(--red-glow);}
+.cert-issuer{
+  font-family:var(--font-mono);font-size:.58rem;color:var(--red);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;
+  position:relative;z-index:1;
+}
+.cert-title{
+  font-family:var(--font-head);font-size:.92rem;color:var(--white);
+  margin-bottom:.5rem;letter-spacing:.5px;position:relative;z-index:1;
+}
+.cert-date{
+  font-family:var(--font-mono);font-size:.62rem;color:var(--muted);
+  position:relative;z-index:1;
+}
+.cert-expand-hint{
+  font-family:var(--font-mono);font-size:.58rem;color:var(--red);
+  margin-top:.75rem;opacity:0;transition:opacity .3s;
+  position:relative;z-index:1;
+}
+.cert-card:hover .cert-expand-hint{opacity:1;}
+
+/* ============================================================
+   WORKSHOPS — Garage Display
+   ============================================================ */
+#workshops{background:var(--bg2);}
+.ws-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1px;background:var(--border);}
+.ws-card{
+  background:var(--bg3);padding:1.75rem;
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.ws-card::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:2px;background:var(--red);opacity:0;
+  transition:opacity .3s;box-shadow:0 0 10px var(--red-glow);
+}
+.ws-card:hover{background:var(--bg4);}
+.ws-card:hover::before{opacity:1;}
+.ws-type{
+  font-family:var(--font-mono);font-size:.58rem;color:var(--red);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:.75rem;
+}
+.ws-title{
+  font-family:var(--font-head);font-size:.92rem;color:var(--white);
+  margin-bottom:.75rem;letter-spacing:.5px;line-height:1.3;
+}
+.ws-meta{
+  color:var(--muted);font-size:.84rem;line-height:1.8;margin-bottom:1rem;
+  font-weight:400;
+}
+.ws-date{
+  font-family:var(--font-mono);font-size:.6rem;color:var(--red);
+  letter-spacing:1.5px;
+}
+
+/* ============================================================
+   CODING PROFILES — Leaderboard
+   ============================================================ */
+#coding{background:var(--bg);}
+.coding-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--border);}
+.code-card{
+  background:var(--bg2);padding:2rem 1.5rem;
+  text-decoration:none;display:block;
+  transition:all .3s;position:relative;overflow:hidden;
+  text-align:center;
+}
+.code-card::before{
+  content:'';position:absolute;top:0;left:50%;
+  transform:translateX(-50%);
+  width:0;height:2px;background:var(--red);
+  transition:width .4s;box-shadow:0 0 10px var(--red-glow);
+}
+.code-card:hover{background:var(--bg3);transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.4);}
+.code-card:hover::before{width:80%;}
+.code-icon{
+  font-size:2rem;color:var(--red);margin-bottom:1rem;
+  display:block;transition:transform .3s;
+}
+.code-card:hover .code-icon{transform:scale(1.15);}
+.code-platform{
+  font-family:var(--font-head);font-size:.85rem;color:var(--white);
+  letter-spacing:1.5px;margin-bottom:.4rem;
+}
+.code-user{
+  font-family:var(--font-mono);font-size:.62rem;color:var(--muted);
+  letter-spacing:.5px;
+}
+
+/* ============================================================
+   CONTACT SECTION — Radio Communication Style
+   ============================================================ */
+#contact{
+  background:var(--bg2);
+  position:relative;overflow:hidden;
+}
+#contact::before{
+  content:'';position:absolute;right:-10%;bottom:-10%;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(204,0,0,.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;}
+
+.contact-big{
+  font-family:var(--font-head);
+  font-size:clamp(3rem,6vw,5.5rem);
+  color:var(--white);line-height:.95;
+  margin-bottom:2rem;letter-spacing:2px;
+}
+.contact-big span{
+  color:var(--red);display:block;
+  text-shadow:0 0 40px var(--red-glow);
+}
+
+.contact-info{display:flex;flex-direction:column;gap:1.25rem;margin-bottom:2rem;}
+.ci{display:flex;align-items:flex-start;gap:1rem;}
+.ci-icon{
+  width:38px;height:38px;background:var(--red-dim);
+  border:1px solid rgba(204,0,0,.25);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--red);font-size:.85rem;flex-shrink:0;
+  transition:all .3s;
+}
+.ci:hover .ci-icon{background:var(--red);color:#fff;box-shadow:0 4px 16px var(--red-glow);}
+.ci-detail{display:flex;flex-direction:column;gap:.2rem;}
+.ci-type{
+  font-family:var(--font-mono);font-size:.58rem;color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;
+}
+.ci-val{font-family:var(--font-mono);font-size:.8rem;color:var(--white);}
+
+.contact-socials{display:flex;flex-wrap:wrap;gap:.6rem;}
+.contact-social-btn{
+  font-family:var(--font-mono);font-size:.62rem;color:var(--muted);
+  text-decoration:none;letter-spacing:1px;text-transform:uppercase;
+  border:1px solid var(--border2);padding:.5rem 1rem;
+  display:inline-flex;align-items:center;gap:.5rem;
+  transition:all .3s;
+}
+.contact-social-btn:hover{border-color:var(--red);color:var(--red);box-shadow:inset 0 0 16px var(--red-dim);}
+
+/* CONTACT FORM */
+.cf{display:flex;flex-direction:column;gap:1.25rem;}
+.cf-field{display:flex;flex-direction:column;gap:.5rem;}
+.cf-lbl{
+  font-family:var(--font-mono);font-size:.6rem;color:var(--red);
+  letter-spacing:2px;text-transform:uppercase;
+}
+.cf-input{
+  background:var(--bg3);border:1px solid var(--border2);
+  color:var(--white);font-family:var(--font-mono);font-size:.8rem;
+  padding:.85rem 1rem;outline:none;
+  transition:border-color .3s,box-shadow .3s;
+  width:100%;
+}
+.cf-input::placeholder{color:var(--muted);}
+.cf-input:focus{border-color:var(--red);box-shadow:0 0 0 1px var(--red),inset 0 0 16px var(--red-dim);}
+textarea.cf-input{min-height:120px;resize:vertical;font-family:var(--font-mono);}
+.cf-submit{
+  padding:.9rem 2.5rem;background:var(--red);color:#fff;
+  font-family:var(--font-mono);font-size:.7rem;font-weight:600;
+  letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;
+  transition:all .3s;display:inline-flex;align-items:center;gap:.6rem;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+  width:100%;justify-content:center;
+}
+.cf-submit:hover{background:var(--red-bright);box-shadow:0 8px 30px var(--red-glow);}
+
+/* ============================================================
+   FOOTER — Finish Line
+   ============================================================ */
+footer{
+  background:var(--bg);
+  border-top:1px solid var(--border);
+  padding:3rem 5rem;
+  display:flex;flex-direction:column;
+  align-items:center;gap:1.25rem;text-align:center;
+  position:relative;overflow:hidden;
+}
+footer::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:repeating-linear-gradient(90deg,var(--red) 0,var(--red) 20px,var(--bg) 20px,var(--bg) 40px);
+  opacity:.4;
+}
+.footer-name{
+  font-family:var(--font-head);font-size:1.8rem;color:var(--white);
+  letter-spacing:6px;
+}
+.footer-name span{color:var(--red);}
+.footer-note{
+  font-family:var(--font-mono);font-size:.6rem;color:var(--muted);
+  letter-spacing:2px;
+}
+.footer-links{display:flex;gap:1.25rem;}
+.footer-links a{
+  width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+  color:var(--muted);border:1px solid var(--border2);font-size:.9rem;
+  transition:all .3s;text-decoration:none;
+}
+.footer-links a:hover{color:var(--red);border-color:var(--red);box-shadow:0 4px 14px var(--red-glow);}
+
+/* ============================================================
+   F1 INTEREST BADGE — subtle racing easter egg
+   ============================================================ */
+.f1-badge{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:var(--bg3);border:1px solid var(--border2);
+  padding:.4rem 1rem;margin-top:.75rem;
+  font-family:var(--font-mono);font-size:.6rem;color:var(--muted);
+  letter-spacing:1.5px;transition:all .3s;cursor:default;
+}
+.f1-badge:hover{border-color:var(--red);color:var(--red);}
+.f1-dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:glowDot 2s infinite alternate;}
+@keyframes glowDot{from{box-shadow:0 0 4px var(--red-glow);}to{box-shadow:0 0 12px var(--red-glow),0 0 20px var(--red-glow);}}
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+#lightbox{
+  position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:10000;
+  display:none;align-items:center;justify-content:center;
+}
+#lightbox.open{display:flex;}
+#lb-img{max-width:90vw;max-height:85vh;object-fit:contain;border:1px solid var(--border2);}
+.lb-close{
+  position:absolute;top:2rem;right:2rem;color:var(--white);
+  background:var(--red);border:none;width:40px;height:40px;
+  cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.lb-close:hover{background:var(--red-bright);}
+
+/* ============================================================
+   TRACK ANIMATION CANVAS — dashed circuit lines
+   ============================================================ */
+/* Lives in JS */
+
+/* ============================================================
+   MEDIA QUERIES
+   ============================================================ */
+@media(max-width:1100px){
+  nav{padding:.9rem 2rem;}
+  .nav-links{gap:1.5rem;}
+  section{padding:5rem 2.5rem;}
+  .stats-banner{padding:2rem 2.5rem;}
+  #hero{padding:0 2.5rem;}
+  .about-grid{grid-template-columns:1fr;gap:3rem;}
+  .photo-wrap{width:100%;max-width:280px;}
+  .contact-layout{grid-template-columns:1fr;gap:3rem;}
+  .acad-layout{grid-template-columns:1fr;gap:3rem;}
+  .hero-race-num{display:none;}
+  .sidebar,.social-strip{display:none;}
+}
+@media(max-width:768px){
+  nav{padding:.8rem 1.5rem;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  section{padding:4rem 1.5rem;}
+  .stats-banner{padding:1.5rem;grid-template-columns:repeat(2,1fr);}
+  #hero{padding:0 1.5rem;}
+  .hero-specs{grid-template-columns:repeat(3,1fr);}
+  .hero-btns{flex-direction:column;}
+  footer{padding:2rem 1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <div class="load-f1">
+    <div class="load-car">&#x1F3CE;&#xFE0F;</div>
+    <div class="load-name">SHESHAGIRI <span>RB</span></div>
+    <div class="load-sub">ECE Engineer · IoT Developer · F1 Enthusiast</div>
+    <div class="load-bar-wrap"><div class="load-bar-fill"></div></div>
+    <div class="load-speed">&#9654; LOADING PORTFOLIO...</div>
+  </div>
+</div>
+
+<!-- SCROLL PROGRESS -->
+<div id="scroll-progress"></div>
+
+<!-- CUSTOM CURSOR -->
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <span class="logo-flag">
+      <span class="flag-stripe fs1"></span>
+      <span class="flag-stripe fs2"></span>
+      <span class="flag-stripe fs3"></span>
+    </span>
+    SHESHAGIRI RB
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about"><span class="nav-number">01.</span>About</a></li>
+    <li><a href="#skills"><span class="nav-number">02.</span>Skills</a></li>
+    <li><a href="#projects"><span class="nav-number">03.</span>Projects</a></li>
+    <li><a href="#academics"><span class="nav-number">04.</span>Academics</a></li>
+    <li><a href="#achievements"><span class="nav-number">05.</span>Achievements</a></li>
+    <li><a href="#certifications"><span class="nav-number">06.</span>Certs</a></li>
+    <li><a href="#contact"><span class="nav-number">07.</span>Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">01. About</a>
+  <a href="#skills" onclick="closeMobile()">02. Skills</a>
+  <a href="#projects" onclick="closeMobile()">03. Projects</a>
+  <a href="#academics" onclick="closeMobile()">04. Academics</a>
+  <a href="#achievements" onclick="closeMobile()">05. Achievements</a>
+  <a href="#certifications" onclick="closeMobile()">06. Certifications</a>
+  <a href="#workshops" onclick="closeMobile()">07. Workshops</a>
+  <a href="#contact" onclick="closeMobile()">08. Contact</a>
+</div>
+
+<!-- SIDEBAR — vertical label -->
+<div class="sidebar">
+  <a href="mailto:sheshagiri018@gmail.com">sheshagiri018@gmail.com</a>
+</div>
+
+<!-- SOCIAL STRIP -->
+<div class="social-strip">
+  <a href="https://github.com/sheshagiri018-sys" target="_blank" rel="noopener">
+    <i class="fab fa-github"></i><span class="tip">GitHub</span>
+  </a>
+  <a href="https://www.linkedin.com/in/sheshagiri-r-b-96187b336" target="_blank" rel="noopener">
+    <i class="fab fa-linkedin-in"></i><span class="tip">LinkedIn</span>
+  </a>
+  <a href="https://leetcode.com/u/sheshagiri_018/" target="_blank" rel="noopener">
+    <i class="fas fa-code"></i><span class="tip">LeetCode</span>
+  </a>
+  <a href="https://www.hackerrank.com/profile/sheshagiri018" target="_blank" rel="noopener">
+    <i class="fab fa-hackerrank"></i><span class="tip">HackerRank</span>
+  </a>
+</div>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section id="hero">
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Carbon texture -->
+  <div class="hero-carbon"></div>
+
+  <!-- Speed lines -->
+  <div class="speed-lines" id="speedLines"></div>
+
+  <!-- Red glow -->
+  <div class="hero-glow"></div>
+
+  <!-- Big race number -->
+  <div class="hero-race-num">18</div>
+
+  <div class="hero-content">
+    <div class="hero-flag-strip">
+      <div class="hfs hfs-r"></div><div class="hfs hfs-r"></div>
+      <div class="hfs hfs-w"></div><div class="hfs hfs-w"></div>
+      <div class="hfs hfs-d"></div><div class="hfs hfs-d"></div>
+      <div class="hfs hfs-r"></div><div class="hfs hfs-r"></div>
+    </div>
+
+    <div class="hero-tag">ECE Engineer &amp; Builder</div>
+
+    <h1 class="hero-name">
+      SHESHAGIRI
+      <span class="surname">RB</span>
+    </h1>
+
+    <div class="hero-divider">
+      <div class="hd-line"></div>
+      <i class="hd-icon fas fa-flag-checkered"></i>
+      <div class="hd-line" style="background:linear-gradient(90deg,transparent,var(--red));"></div>
+    </div>
+
+    <div class="hero-title">// Role</div>
+    <div class="hero-role"><span class="tw" id="tw"></span></div>
+
+    <p class="hero-tagline">
+      Electronics &amp; Communication Engineering student at Sona College of Technology — 
+      bridging hardware and software through embedded systems, IoT, and real-world innovation.
+      Hackathon competitor. Prototype builder. F1 racing enthusiast.
+    </p>
+
+    <!-- Spec table — driver style -->
+    <div class="hero-specs">
+      <div class="spec-item">
+        <span class="spec-val">8.54</span>
+        <div class="spec-lbl">CGPA</div>
+      </div>
+      <div class="spec-item">
+        <span class="spec-val">3+</span>
+        <div class="spec-lbl">Projects</div>
+      </div>
+      <div class="spec-item">
+        <span class="spec-val">4+</span>
+        <div class="spec-lbl">Certs</div>
+      </div>
+    </div>
+
+    <!-- F1 Interest Badge -->
+    <div class="f1-badge">
+      <span class="f1-dot"></span>
+      F1 ENTHUSIAST — SPEED &amp; PRECISION IN CODE &amp; RACING
+    </div>
+
+    <div class="hero-btns" style="margin-top:1.5rem;">
+      <a href="#projects" class="btn-p">
+        <i class="fas fa-flag-checkered"></i> View Projects
+      </a>
+      <a href="#contact" class="btn-o">
+        <i class="fas fa-paper-plane"></i> Contact Me
+      </a>
+      <a href="https://github.com/sheshagiri018-sys" target="_blank" class="btn-s">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <div class="scroll-lbl">Scroll</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STATS BANNER
+     ============================================================ -->
+<div class="stats-banner">
+  <div class="stat-box">
+    <span class="num" data-target="3">0</span>
+    <div class="lbl">Projects Built</div>
+  </div>
+  <div class="stat-box">
+    <span class="num" data-target="4">0</span>
+    <div class="lbl">Certifications</div>
+  </div>
+  <div class="stat-box">
+    <span class="num" data-target="2">0</span>
+    <div class="lbl">Hackathons</div>
+  </div>
+  <div class="stat-box">
+    <span class="num" data-target="90">0</span>
+    <div class="lbl">HSC Percentage</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ABOUT
+     ============================================================ -->
+<section id="about">
+  <div class="about-grid">
+    <div class="photo-wrap reveal-left">
+      <div class="photo-frame">
+        <!-- Placeholder — replace with your actual photo -->
+        <img src="https://via.placeholder.com/300x360/141416/CC0000?text=S.RB" alt="Sheshagiri RB"/>
+        <div class="photo-corner pc-tl"></div>
+        <div class="photo-corner pc-tr"></div>
+        <div class="photo-corner pc-bl"></div>
+        <div class="photo-corner pc-br"></div>
+      </div>
+      <div class="photo-badge">ECE · 2024 &ndash; 2028</div>
+    </div>
+
+    <div class="about-details reveal reveal-delay-2">
+      <div class="sec-tag">01 — About Me</div>
+      <h2 class="sec-title">THE <span>DRIVER'S</span> BRIEF</h2>
+      <div class="sec-line"></div>
+
+      <p>I am a first-year Electronics and Communication Engineering student at Sona College of Technology, Salem — passionate about technology, embedded systems, IoT, and problem-solving. Like an F1 driver who obsesses over every millisecond, I obsess over every line of code and every circuit connection.</p>
+
+      <p>Driven by curiosity and a passion for bridging hardware and software, I actively participate in national hackathons, innovation competitions like ISMART, and national-level workshops at premier institutions like VIT Vellore.</p>
+
+      <div class="about-info">
+        <div class="info-item">
+          <span class="info-lbl">Full Name</span>
+          <span class="info-val">Sheshagiri RB</span>
+        </div>
+        <div class="info-item">
+          <span class="info-lbl">Institution</span>
+          <span class="info-val">Sona College of Technology</span>
+        </div>
+        <div class="info-item">
+          <span class="info-lbl">Degree</span>
+          <span class="info-val">B.E. ECE &mdash; 2024&ndash;2028</span>
+        </div>
+        <div class="info-item">
+          <span class="info-lbl">Current CGPA</span>
+          <span class="info-val">8.54 / 10.0</span>
+        </div>
+        <div class="info-item">
+          <span class="info-lbl">Location</span>
+          <span class="info-val">Salem, Tamil Nadu</span>
+        </div>
+        <div class="info-item">
+          <span class="info-lbl">Admission No.</span>
+          <span class="info-val">24ECEBE166</span>
+        </div>
+        <div class="info-item">
+          <span class="info-lbl">Email</span>
+          <span class="info-val">sheshagiri018@gmail.com</span>
+        </div>
+        <div class="info-item">
+          <span class="info-lbl">Phone</span>
+          <span class="info-val">+91 9698911653</span>
+        </div>
+      </div>
+
+      <div class="about-stats">
+        <div class="a-stat"><span class="num" data-target="3">0</span><span class="lbl">Projects</span></div>
+        <div class="a-stat"><span class="num" data-target="4">0</span><span class="lbl">Certifications</span></div>
+        <div class="a-stat"><span class="num" data-target="2">0</span><span class="lbl">Hackathons</span></div>
+        <div class="a-stat"><span class="num">8.54</span><span class="lbl">CGPA</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SKILLS
+     ============================================================ -->
+<section id="skills">
+  <div class="reveal">
+    <div class="sec-tag">02 — Skills</div>
+    <h2 class="sec-title">TECH <span>STACK</span></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-cat reveal reveal-delay-1">
+      <div class="skill-cat-title"><i class="fas fa-microchip"></i>&nbsp; Hardware &amp; Embedded</div>
+      <div class="skill-tags">
+        <span class="skill-tag">8051 Microcontroller</span>
+        <span class="skill-tag">Arduino</span>
+        <span class="skill-tag">ESP32</span>
+        <span class="skill-tag">IoT</span>
+        <span class="skill-tag">Printed Antennas</span>
+        <span class="skill-tag">Proteus</span>
+        <span class="skill-tag">Keil &micro;Vision</span>
+        <span class="skill-tag">Bluetooth Modules</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal reveal-delay-2">
+      <div class="skill-cat-title"><i class="fas fa-terminal"></i>&nbsp; Programming</div>
+      <div class="skill-tags">
+        <span class="skill-tag">C</span>
+        <span class="skill-tag">C++</span>
+        <span class="skill-tag">Embedded C</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">Assembly (8051 ALP)</span>
+        <span class="skill-tag">SQL / MySQL</span>
+        <span class="skill-tag">Data Structures</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal reveal-delay-1">
+      <div class="skill-cat-title"><i class="fas fa-tools"></i>&nbsp; Tools &amp; Software</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Git &amp; GitHub</span>
+        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">Arduino IDE</span>
+        <span class="skill-tag">MATLAB</span>
+        <span class="skill-tag">Simulink</span>
+        <span class="skill-tag">Linux</span>
+        <span class="skill-tag">EasyEDA</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal reveal-delay-2">
+      <div class="skill-cat-title"><i class="fas fa-wave-square"></i>&nbsp; ECE Core Skills</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Embedded Systems</span>
+        <span class="skill-tag">Digital Electronics</span>
+        <span class="skill-tag">Analog Communication</span>
+        <span class="skill-tag">Signal Processing</span>
+        <span class="skill-tag">VLSI Design</span>
+        <span class="skill-tag">Antenna Design</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal reveal-delay-1">
+      <div class="skill-cat-title"><i class="fas fa-chart-bar"></i>&nbsp; Data &amp; Visualization</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Data Processing</span>
+        <span class="skill-tag">Data Visualization</span>
+        <span class="skill-tag">Data Acquisition</span>
+        <span class="skill-tag">FutureSkills Prime</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal reveal-delay-2">
+      <div class="skill-cat-title"><i class="fas fa-language"></i>&nbsp; Languages Known</div>
+      <div class="skill-tags">
+        <span class="skill-tag">English (Intermediate)</span>
+        <span class="skill-tag">Tamil (Native)</span>
+        <span class="skill-tag">Japanese (Basic)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROJECTS
+     ============================================================ -->
+<section id="projects">
+  <div class="reveal">
+    <div class="sec-tag">03 — Projects</div>
+    <h2 class="sec-title">WHAT I'VE <span>BUILT</span></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="proj-grid">
+
+    <!-- PROJECT 1 — Footstep Energy -->
+    <div class="proj-card reveal reveal-delay-1">
+      <div class="proj-img proj-energy">
+        <div class="proj-illustration">
+          <svg class="proj-img-svg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Energy harvesting circuit illustration -->
+            <defs>
+              <filter id="glow1"><feGaussianBlur stdDeviation="3" result="c"/><feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <linearGradient id="eg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#CC0000" stop-opacity=".8"/><stop offset="100%" stop-color="#CC0000" stop-opacity=".1"/></linearGradient>
+            </defs>
+            <!-- Ground lines -->
+            <line x1="10" y1="160" x2="310" y2="160" stroke="#1E1E22" stroke-width="1"/>
+            <!-- Footstep shape -->
+            <ellipse cx="60" cy="90" rx="28" ry="40" fill="#1a0505" stroke="#CC0000" stroke-width="1.5" filter="url(#glow1)"/>
+            <ellipse cx="60" cy="55" rx="14" ry="18" fill="#1a0505" stroke="#CC0000" stroke-width="1" opacity=".6"/>
+            <!-- Piezo element -->
+            <rect x="115" y="70" width="50" height="30" rx="2" fill="#1a0505" stroke="#CC0000" stroke-width="1.5"/>
+            <line x1="125" y1="80" x2="155" y2="80" stroke="#CC0000" stroke-width="1" opacity=".6"/>
+            <line x1="125" y1="90" x2="155" y2="90" stroke="#CC0000" stroke-width="1" opacity=".6"/>
+            <text x="140" y="93" text-anchor="middle" font-family="monospace" font-size="7" fill="#CC0000" opacity=".7">PIEZO</text>
+            <!-- Arrow -->
+            <path d="M95 85 L110 85" stroke="#CC0000" stroke-width="1.5" marker-end="url(#arr1)" fill="none"/>
+            <!-- Energy bars -->
+            <rect x="200" y="100" width="14" height="60" fill="#1a0505" stroke="#333" stroke-width="1"/>
+            <rect x="200" y="115" width="14" height="45" fill="url(#eg1)"/>
+            <rect x="220" y="100" width="14" height="60" fill="#1a0505" stroke="#333" stroke-width="1"/>
+            <rect x="220" y="105" width="14" height="55" fill="url(#eg1)"/>
+            <rect x="240" y="100" width="14" height="60" fill="#1a0505" stroke="#333" stroke-width="1"/>
+            <rect x="240" y="120" width="14" height="40" fill="url(#eg1)"/>
+            <!-- IoT chip -->
+            <rect x="268" y="68" width="40" height="34" rx="3" fill="#1a0505" stroke="#CC0000" stroke-width="1.5" filter="url(#glow1)"/>
+            <text x="288" y="82" text-anchor="middle" font-family="monospace" font-size="7" fill="#CC0000">IoT</text>
+            <text x="288" y="93" text-anchor="middle" font-family="monospace" font-size="6" fill="#666">ESP32</text>
+            <!-- Connecting lines -->
+            <line x1="165" y1="85" x2="198" y2="85" stroke="#CC0000" stroke-width="1" opacity=".5" stroke-dasharray="3,3"/>
+            <line x1="256" y1="85" x2="268" y2="85" stroke="#CC0000" stroke-width="1" opacity=".5" stroke-dasharray="3,3"/>
+            <!-- WiFi signal -->
+            <path d="M300 48 Q306 42 312 48" stroke="#CC0000" stroke-width="1.5" fill="none" opacity=".4"/>
+            <path d="M297 44 Q306 36 315 44" stroke="#CC0000" stroke-width="1.2" fill="none" opacity=".25"/>
+            <circle cx="306" cy="52" r="2" fill="#CC0000" opacity=".6"/>
+            <!-- Labels -->
+            <text x="60" y="145" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">STEP</text>
+            <text x="140" y="115" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">TRANSDUCER</text>
+            <text x="228" y="175" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">POWER OUT</text>
+          </svg>
+        </div>
+        <div class="proj-overlay"></div>
+      </div>
+      <div class="proj-body">
+        <span class="proj-num">01</span>
+        <div class="proj-tag">IoT · Energy Harvesting · ISMART 2026</div>
+        <div class="proj-title">Footstep Energy Generation System</div>
+        <p class="proj-desc">Prototype selected for ISMART 2026 — harvests kinetic energy from footsteps using piezoelectric transducers, converting mechanical pressure into usable electrical energy for low-power IoT devices.</p>
+        <div class="tech-chips">
+          <span class="tc">Piezoelectric Sensors</span>
+          <span class="tc">Energy Harvesting</span>
+          <span class="tc">IoT</span>
+          <span class="tc">Circuit Design</span>
+          <span class="tc">ESP32</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/sheshagiri018-sys" target="_blank" class="proj-link"><i class="fab fa-github"></i> GitHub</a>
+          <a href="#" class="proj-link"><i class="fas fa-external-link-alt"></i> Details</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 2 — Printed Bluetooth Antenna -->
+    <div class="proj-card reveal reveal-delay-2">
+      <div class="proj-img proj-antenna">
+        <div class="proj-illustration">
+          <svg class="proj-img-svg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="glow2"><feGaussianBlur stdDeviation="3" result="c"/><feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <!-- PCB board -->
+            <rect x="70" y="40" width="180" height="120" rx="4" fill="#05101a" stroke="#1a4060" stroke-width="1.5"/>
+            <!-- Antenna trace — meandered patch -->
+            <path d="M110 80 L110 60 L210 60 L210 80 L130 80 L130 100 L210 100 L210 120 L110 120 L110 140 L210 140" 
+                  stroke="#CC0000" stroke-width="2.5" fill="none" filter="url(#glow2)" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Feed point -->
+            <circle cx="110" cy="110" r="5" fill="#CC0000" filter="url(#glow2)"/>
+            <rect x="88" y="106" width="22" height="8" rx="2" fill="#0a2030" stroke="#1a4060" stroke-width="1"/>
+            <!-- RF waves emanating -->
+            <path d="M240 90 Q254 80 268 90" stroke="#CC0000" stroke-width="1.5" fill="none" opacity=".6"/>
+            <path d="M240 100 Q260 84 280 100" stroke="#CC0000" stroke-width="1.2" fill="none" opacity=".4"/>
+            <path d="M240 110 Q266 88 292 110" stroke="#CC0000" stroke-width="1" fill="none" opacity=".25"/>
+            <!-- GND plane -->
+            <rect x="75" y="148" width="170" height="7" fill="#0a2030" stroke="#1a4060" stroke-width="1" opacity=".8"/>
+            <line x1="80" y1="151" x2="90" y2="155" stroke="#1a4060" stroke-width="1" opacity=".5"/>
+            <line x1="95" y1="151" x2="105" y2="155" stroke="#1a4060" stroke-width="1" opacity=".5"/>
+            <line x1="110" y1="151" x2="120" y2="155" stroke="#1a4060" stroke-width="1" opacity=".5"/>
+            <!-- Labels -->
+            <text x="160" y="175" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">GND PLANE</text>
+            <text x="265" y="76" text-anchor="middle" font-family="monospace" font-size="7" fill="#CC0000" opacity=".7">2.4GHz</text>
+            <text x="110" y="35" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">PRINTED PATCH ANTENNA</text>
+            <text x="265" y="120" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">BT RF</text>
+          </svg>
+        </div>
+        <div class="proj-overlay"></div>
+      </div>
+      <div class="proj-body">
+        <span class="proj-num">02</span>
+        <div class="proj-tag">Antenna Design · VIT Vellore Workshop</div>
+        <div class="proj-title">Printed Bluetooth Antenna for IoT</div>
+        <p class="proj-desc">Hands-on design, fabrication and characterisation of a printed Bluetooth antenna for IoT applications — completed during the National Workshop at VIT Vellore's SENSE department in March 2026.</p>
+        <div class="tech-chips">
+          <span class="tc">Printed Antenna</span>
+          <span class="tc">Bluetooth RF</span>
+          <span class="tc">IoT</span>
+          <span class="tc">VIT Vellore</span>
+          <span class="tc">RF Characterization</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/sheshagiri018-sys" target="_blank" class="proj-link"><i class="fab fa-github"></i> GitHub</a>
+          <a href="#" class="proj-link"><i class="fas fa-external-link-alt"></i> Details</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 3 — SIH -->
+    <div class="proj-card reveal reveal-delay-3">
+      <div class="proj-img proj-hack">
+        <div class="proj-illustration">
+          <svg class="proj-img-svg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="glow3"><feGaussianBlur stdDeviation="3" result="c"/><feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <linearGradient id="hg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#CC0000"/><stop offset="100%" stop-color="#C9A84C"/></linearGradient>
+            </defs>
+            <!-- Central hub -->
+            <circle cx="160" cy="100" r="32" fill="#0d0a00" stroke="url(#hg1)" stroke-width="2" filter="url(#glow3)"/>
+            <text x="160" y="95" text-anchor="middle" font-family="monospace" font-size="9" fill="#CC0000" font-weight="bold">SIH</text>
+            <text x="160" y="108" text-anchor="middle" font-family="monospace" font-size="7" fill="#C9A84C">2025</text>
+            <!-- Team nodes -->
+            <circle cx="80" cy="55" r="18" fill="#0d0a00" stroke="#CC0000" stroke-width="1.2" opacity=".8"/>
+            <text x="80" y="52" text-anchor="middle" font-family="monospace" font-size="7" fill="#CC0000">ECE</text>
+            <text x="80" y="63" text-anchor="middle" font-family="monospace" font-size="6" fill="#666">TEAM</text>
+            <line x1="97" y1="67" x2="130" y2="80" stroke="#CC0000" stroke-width="1" opacity=".4" stroke-dasharray="4,3"/>
+            
+            <circle cx="240" cy="55" r="18" fill="#0d0a00" stroke="#CC0000" stroke-width="1.2" opacity=".8"/>
+            <text x="240" y="52" text-anchor="middle" font-family="monospace" font-size="7" fill="#CC0000">GOV</text>
+            <text x="240" y="63" text-anchor="middle" font-family="monospace" font-size="6" fill="#666">PROBLEM</text>
+            <line x1="223" y1="67" x2="190" y2="80" stroke="#CC0000" stroke-width="1" opacity=".4" stroke-dasharray="4,3"/>
+            
+            <circle cx="80" cy="148" r="18" fill="#0d0a00" stroke="#C9A84C" stroke-width="1.2" opacity=".8"/>
+            <text x="80" y="145" text-anchor="middle" font-family="monospace" font-size="6" fill="#C9A84C">ROUND</text>
+            <text x="80" y="156" text-anchor="middle" font-family="monospace" font-size="7" fill="#C9A84C">1 ✓</text>
+            <line x1="97" y1="138" x2="130" y2="118" stroke="#C9A84C" stroke-width="1" opacity=".5" stroke-dasharray="4,3"/>
+            
+            <circle cx="240" cy="148" r="18" fill="#0d0a00" stroke="#CC0000" stroke-width="1.2" opacity=".8"/>
+            <text x="240" y="145" text-anchor="middle" font-family="monospace" font-size="7" fill="#CC0000">72hr</text>
+            <text x="240" y="156" text-anchor="middle" font-family="monospace" font-size="6" fill="#666">SPRINT</text>
+            <line x1="222" y1="136" x2="192" y2="118" stroke="#CC0000" stroke-width="1" opacity=".4" stroke-dasharray="4,3"/>
+            <!-- National badge -->
+            <text x="160" y="185" text-anchor="middle" font-family="monospace" font-size="7" fill="#C9A84C" opacity=".7">★ NATIONAL LEVEL ★</text>
+          </svg>
+        </div>
+        <div class="proj-overlay"></div>
+      </div>
+      <div class="proj-body">
+        <span class="proj-num">03</span>
+        <div class="proj-tag">Hackathon · SIH 2025 · National Level</div>
+        <div class="proj-title">Smart India Hackathon — National Solution</div>
+        <p class="proj-desc">Participated in SIH 2025 at national level, clearing the first round. Developed an innovative engineering solution addressing a government problem statement in a cross-functional team under tight deadlines.</p>
+        <div class="tech-chips">
+          <span class="tc">Problem Solving</span>
+          <span class="tc">Rapid Prototyping</span>
+          <span class="tc">Team Collaboration</span>
+          <span class="tc">SIH 2025</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/sheshagiri018-sys" target="_blank" class="proj-link"><i class="fab fa-github"></i> GitHub</a>
+          <a href="#" class="proj-link"><i class="fas fa-external-link-alt"></i> Details</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     ACADEMICS
+     ============================================================ -->
+<section id="academics">
+  <div class="reveal">
+    <div class="sec-tag">04 — Academics</div>
+    <h2 class="sec-title">PERFORMANCE <span>DATA</span></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="acad-layout">
+    <div>
+      <div class="cgpa-box reveal">
+        <span class="cgpa-num">8.54</span>
+        <div class="cgpa-lbl">Current CGPA &nbsp;&middot;&nbsp; Sona College of Technology &nbsp;&middot;&nbsp; ECE</div>
+      </div>
+      <div class="sem-chart reveal">
+        <div class="sem-chart-title">Academic Milestones</div>
+        <div class="chart-bars">
+          <div class="cbw">
+            <div class="cb-val">8.54</div>
+            <div class="cb"><div class="cbf" style="height:0%" data-h="85.4%"></div></div>
+            <div class="cb-lbl">Sem 1&ndash;2</div>
+          </div>
+          <div class="cbw">
+            <div class="cb-val">8.54</div>
+            <div class="cb"><div class="cbf" style="height:0%" data-h="85.4%"></div></div>
+            <div class="cb-lbl">Current</div>
+          </div>
+          <div class="cbw">
+            <div class="cb-val">90%</div>
+            <div class="cb"><div class="cbf" style="height:0%" data-h="90%"></div></div>
+            <div class="cb-lbl">HSC 12th</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="sec-tag" style="margin-bottom:1.25rem;">Key Subjects — Current Semester</div>
+      <div class="subj-bars">
+        <div class="subj-item">
+          <div class="subj-hdr"><span class="subj-name">Microprocessors &amp; Microcontrollers</span><span class="subj-score">A+</span></div>
+          <div class="bar-track"><div class="bar-fill" data-w="92%"></div></div>
+        </div>
+        <div class="subj-item">
+          <div class="subj-hdr"><span class="subj-name">Digital Signal Processing</span><span class="subj-score">A</span></div>
+          <div class="bar-track"><div class="bar-fill" data-w="80%"></div></div>
+        </div>
+        <div class="subj-item">
+          <div class="subj-hdr"><span class="subj-name">VLSI Design</span><span class="subj-score">A+</span></div>
+          <div class="bar-track"><div class="bar-fill" data-w="86%"></div></div>
+        </div>
+        <div class="subj-item">
+          <div class="subj-hdr"><span class="subj-name">Communication Systems</span><span class="subj-score">A</span></div>
+          <div class="bar-track"><div class="bar-fill" data-w="82%"></div></div>
+        </div>
+        <div class="subj-item">
+          <div class="subj-hdr"><span class="subj-name">Python Programming</span><span class="subj-score">A+</span></div>
+          <div class="bar-track"><div class="bar-fill" data-w="89%"></div></div>
+        </div>
+        <div class="subj-item">
+          <div class="subj-hdr"><span class="subj-name">Data Structures (C++)</span><span class="subj-score">A</span></div>
+          <div class="bar-track"><div class="bar-fill" data-w="78%"></div></div>
+        </div>
+      </div>
+      <div class="acad-note">
+        &#9733; Department Top 10 &mdash; 2025<br>
+        Consistently ranked among the top students in ECE with a CGPA of 8.54/10.0
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ACHIEVEMENTS
+     ============================================================ -->
+<section id="achievements">
+  <div class="reveal">
+    <div class="sec-tag">05 — Achievements</div>
+    <h2 class="sec-title">RACE <span>PODIUM</span></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-date">March 2026</div>
+      <div class="tl-title">VIT Vellore &mdash; National Workshop Participant</div>
+      <p class="tl-desc">Participated in the One-Day National Workshop on Design, Fabrication and Characterization of Printed Bluetooth Antenna for IoT Application organized by SENSE, VIT Vellore. Gained hands-on experience in RF antenna fabrication.</p>
+      <span class="tl-badge">Workshop</span>
+    </div>
+    <div class="tl-item reveal reveal-delay-1">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2026</div>
+      <div class="tl-title">ISMART 2026 &mdash; Prototype Presenter</div>
+      <p class="tl-desc">Developed and presented a prototype on &ldquo;Footstep Energy Generation&rdquo; at ISMART 2026 — designed a complete energy harvesting circuit using piezoelectric transducers to power embedded IoT systems.</p>
+      <span class="tl-badge">Innovation</span>
+    </div>
+    <div class="tl-item reveal reveal-delay-2">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2025</div>
+      <div class="tl-title">Smart India Hackathon 2025 &mdash; National Level</div>
+      <p class="tl-desc">Participated at national level in SIH 2025, clearing the first round by delivering an innovative engineering solution to a government-issued problem statement under a tight deadline.</p>
+      <span class="tl-badge">Hackathon</span>
+    </div>
+    <div class="tl-item reveal reveal-delay-3">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2025</div>
+      <div class="tl-title">Department Top 10 &mdash; Academic Excellence</div>
+      <p class="tl-desc">Ranked in the top 10 of the ECE department at Sona College of Technology with a CGPA of 8.54/10.0, demonstrating consistent academic performance across core engineering subjects.</p>
+      <span class="tl-badge">Academic</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CERTIFICATIONS
+     ============================================================ -->
+<section id="certifications">
+  <div class="reveal">
+    <div class="sec-tag">06 — Certifications</div>
+    <h2 class="sec-title">RACE <span>LICENCES</span></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="cert-grid">
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-icon"><i class="fas fa-lightbulb"></i></div>
+      <div class="cert-issuer">NPTEL &mdash; Elite Certificate</div>
+      <div class="cert-title">Design Thinking</div>
+      <div class="cert-date">Completed &middot; Certificate of Excellence</div>
+      <div class="cert-expand-hint">Problem-solving · Innovation process · Empathy mapping &rarr;</div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-icon"><i class="fas fa-globe"></i></div>
+      <div class="cert-issuer">NASSCOM &mdash; FutureSkills Prime</div>
+      <div class="cert-title">Digital 101 Course</div>
+      <div class="cert-date">Certified &middot; Digital technologies &amp; emerging trends</div>
+      <div class="cert-expand-hint">Industry-aligned digital skills &rarr;</div>
+    </div>
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-icon"><i class="fas fa-database"></i></div>
+      <div class="cert-issuer">NASSCOM &mdash; IT-ITeS SSC</div>
+      <div class="cert-title">Data Processing &amp; Visualization</div>
+      <div class="cert-date">06 February 2026 &middot; Certificate of Completion</div>
+      <div class="cert-expand-hint">Data pipelines · Visualization tools &rarr;</div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-icon"><i class="fas fa-satellite"></i></div>
+      <div class="cert-issuer">NASSCOM &mdash; IT-ITeS SSC</div>
+      <div class="cert-title">Acquiring Data</div>
+      <div class="cert-date">22 March 2026 &middot; Certificate of Completion</div>
+      <div class="cert-expand-hint">Data acquisition · Sensors · Digital standards &rarr;</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WORKSHOPS
+     ============================================================ -->
+<section id="workshops">
+  <div class="reveal">
+    <div class="sec-tag">07 — Workshops &amp; Events</div>
+    <h2 class="sec-title">LEARNING <span>BEYOND</span> CLASS</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="ws-grid">
+    <div class="ws-card reveal reveal-delay-1">
+      <div class="ws-type">National Workshop &mdash; VIT Vellore</div>
+      <div class="ws-title">Printed Bluetooth Antenna Design for IoT</div>
+      <p class="ws-meta">Organiser: SENSE, VIT Vellore &middot; Topics: Antenna design, fabrication, RF characterisation, IoT applications, Bluetooth communication</p>
+      <div class="ws-date">March 07, 2026</div>
+    </div>
+    <div class="ws-card reveal reveal-delay-2">
+      <div class="ws-type">NASSCOM &mdash; FutureSkills Prime</div>
+      <div class="ws-title">Data Processing and Visualisation</div>
+      <p class="ws-meta">Platform: IT-ITeS SSC Nasscom &middot; Topics: Data pipelines, visualisation tools, industry-aligned digital skills</p>
+      <div class="ws-date">06 February 2026</div>
+    </div>
+    <div class="ws-card reveal reveal-delay-3">
+      <div class="ws-type">NASSCOM &mdash; FutureSkills Prime</div>
+      <div class="ws-title">Acquiring Data</div>
+      <p class="ws-meta">Platform: IT-ITeS SSC Nasscom &middot; Topics: Data acquisition methods, sensors, digital data collection standards</p>
+      <div class="ws-date">22 March 2026</div>
+    </div>
+    <div class="ws-card reveal reveal-delay-1">
+      <div class="ws-type">National Hackathon</div>
+      <div class="ws-title">Smart India Hackathon 2025</div>
+      <p class="ws-meta">Level: National &middot; Result: Round 1 Cleared &middot; Cross-functional team, engineering problem-solving</p>
+      <div class="ws-date">2025</div>
+    </div>
+    <div class="ws-card reveal reveal-delay-2">
+      <div class="ws-type">Innovation Competition</div>
+      <div class="ws-title">ISMART 2026</div>
+      <p class="ws-meta">Topic: Footstep Energy Generation &middot; Prototype developed &amp; selected for presentation &middot; Renewable energy domain</p>
+      <div class="ws-date">2026</div>
+    </div>
+    <div class="ws-card reveal reveal-delay-3">
+      <div class="ws-type">Arduino &amp; IoT Workshop</div>
+      <div class="ws-title">Arduino and IoT Applications</div>
+      <p class="ws-meta">Topics: Arduino programming, IoT implementation, Bluetooth &amp; signal receiver integration, hands-on embedded projects</p>
+      <div class="ws-date">2024–2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CODING PROFILES
+     ============================================================ -->
+<section id="coding">
+  <div class="reveal">
+    <div class="sec-tag">08 — Coding Profiles</div>
+    <h2 class="sec-title">FIND ME <span>ON</span></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="coding-grid">
+    <a href="https://github.com/sheshagiri018-sys" target="_blank" rel="noopener" class="code-card reveal reveal-delay-1">
+      <i class="fab fa-github code-icon"></i>
+      <div class="code-platform">GitHub</div>
+      <div class="code-user">sheshagiri018-sys</div>
+    </a>
+    <a href="https://www.linkedin.com/in/sheshagiri-r-b-96187b336" target="_blank" rel="noopener" class="code-card reveal reveal-delay-2">
+      <i class="fab fa-linkedin-in code-icon"></i>
+      <div class="code-platform">LinkedIn</div>
+      <div class="code-user">sheshagiri-r-b-96187b336</div>
+    </a>
+    <a href="https://leetcode.com/u/sheshagiri_018/" target="_blank" rel="noopener" class="code-card reveal reveal-delay-3">
+      <i class="fas fa-code code-icon"></i>
+      <div class="code-platform">LeetCode</div>
+      <div class="code-user">sheshagiri_018</div>
+    </a>
+    <a href="https://www.hackerrank.com/profile/sheshagiri018" target="_blank" rel="noopener" class="code-card reveal reveal-delay-4">
+      <i class="fab fa-hackerrank code-icon"></i>
+      <div class="code-platform">HackerRank</div>
+      <div class="code-user">sheshagiri018</div>
+    </a>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<section id="contact">
+  <div class="contact-layout">
+    <div class="reveal">
+      <div class="sec-tag">09 — Contact</div>
+      <div class="contact-big">
+        LET'S<br>
+        <span>CONNECT</span>
+      </div>
+      <div class="contact-info">
+        <div class="ci">
+          <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+          <div class="ci-detail">
+            <span class="ci-type">Email</span>
+            <span class="ci-val">sheshagiri018@gmail.com</span>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-icon"><i class="fas fa-phone"></i></div>
+          <div class="ci-detail">
+            <span class="ci-type">Phone</span>
+            <span class="ci-val">+91 9698911653</span>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="ci-detail">
+            <span class="ci-type">Address</span>
+            <span class="ci-val">75, Periya Thambi Garden, Perumal Malai Adivaram, Reddiyur, Salem, Tamil Nadu</span>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-icon"><i class="fas fa-graduation-cap"></i></div>
+          <div class="ci-detail">
+            <span class="ci-type">Institution</span>
+            <span class="ci-val">Sona College of Technology, Salem<br>B.E. ECE &middot; 2024&ndash;2028</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-socials">
+        <a href="https://github.com/sheshagiri018-sys" target="_blank" class="contact-social-btn"><i class="fab fa-github"></i> GitHub</a>
+        <a href="https://www.linkedin.com/in/sheshagiri-r-b-96187b336" target="_blank" class="contact-social-btn"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+        <a href="https://leetcode.com/u/sheshagiri_018/" target="_blank" class="contact-social-btn"><i class="fas fa-code"></i> LeetCode</a>
+        <a href="https://www.hackerrank.com/profile/sheshagiri018" target="_blank" class="contact-social-btn"><i class="fab fa-hackerrank"></i> HackerRank</a>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="cf">
+        <div class="cf-field">
+          <label class="cf-lbl">Name</label>
+          <input type="text" class="cf-input" placeholder="Your full name" id="cf-name"/>
+        </div>
+        <div class="cf-field">
+          <label class="cf-lbl">Email</label>
+          <input type="email" class="cf-input" placeholder="your@email.com" id="cf-email"/>
+        </div>
+        <div class="cf-field">
+          <label class="cf-lbl">Subject</label>
+          <input type="text" class="cf-input" placeholder="Internship / Collaboration / Query" id="cf-subj"/>
+        </div>
+        <div class="cf-field">
+          <label class="cf-lbl">Message</label>
+          <textarea class="cf-input" placeholder="Tell me about your opportunity..." id="cf-msg"></textarea>
+        </div>
+        <button class="cf-submit" onclick="handleSubmit(this)">
+          <i class="fas fa-paper-plane"></i> Send Message &rarr;
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button class="lb-close" onclick="closeLB()"><i class="fas fa-times"></i></button>
+  <img id="lb-img" src="" alt="Certificate"/>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">SHESHAGIRI <span>RB</span></div>
+  <div class="footer-note">B.E. ECE &middot; Sona College of Technology &middot; Salem &middot; 2024&ndash;2028</div>
+  <div class="footer-links">
+    <a href="https://github.com/sheshagiri018-sys" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="https://www.linkedin.com/in/sheshagiri-r-b-96187b336" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://leetcode.com/u/sheshagiri_018/" target="_blank"><i class="fas fa-code"></i></a>
+    <a href="https://www.hackerrank.com/profile/sheshagiri018" target="_blank"><i class="fab fa-hackerrank"></i></a>
+  </div>
+  <div class="footer-note">&copy; 2026 &middot; Crafted with <span style="color:var(--red)">&#9829;</span> &amp; passion &mdash; Speed. Precision. Engineering.</div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+/* ---- LOADING SCREEN ---- */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    const ls=document.getElementById('loading-screen');
+    ls.classList.add('hide');
+    setTimeout(()=>{ls.style.display='none';},900);
+  },2200);
+});
+
+/* ---- SCROLL PROGRESS ---- */
+window.addEventListener('scroll',()=>{
+  const d=document.documentElement;
+  const p=(d.scrollTop/(d.scrollHeight-d.clientHeight))*100;
+  document.getElementById('scroll-progress').style.width=p+'%';
+  const btn=document.getElementById('back-top');
+  btn.classList.toggle('visible',window.scrollY>400);
+});
+
+/* ---- HAMBURGER ---- */
+document.getElementById('hamburger').addEventListener('click',function(){
+  this.classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+function closeMobile(){
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+/* ---- CUSTOM CURSOR ---- */
+const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+(function animRing(){
+  rx+=(mx-rx)*.1;ry+=(my-ry)*.1;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,button,.skill-tag,.cert-card,.proj-card,.ws-card,.code-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('big'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('big'));
+});
+
+/* ---- CANVAS — Circuit Track ---- */
+const canvas=document.getElementById('bg-canvas'),ctx=canvas.getContext('2d');
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+resize();window.addEventListener('resize',()=>{resize();buildNodes();});
+const COLS=20,ROWS=12;let nodes=[];
+function buildNodes(){
+  nodes=[];
+  const cw=canvas.width/(COLS-1),ch=canvas.height/(ROWS-1);
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+    nodes.push({
+      x:c*cw+(Math.random()-.5)*cw*.35,
+      y:r*ch+(Math.random()-.5)*ch*.35,
+      vx:(Math.random()-.5)*.15,vy:(Math.random()-.5)*.15,
+      r:Math.random()<.12?3.5:Math.random()<.35?2:1.2,
+      active:Math.random()<.25,
+      hue:Math.random()<.8?'204,0,0':'201,168,76'
+    });
+  }
+}
+buildNodes();
+function drawCircuit(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  nodes.forEach(n=>{
+    n.x+=n.vx;n.y+=n.vy;
+    if(n.x<0||n.x>canvas.width)n.vx*=-1;
+    if(n.y<0||n.y>canvas.height)n.vy*=-1;
+  });
+  ctx.lineWidth=.7;
+  for(let i=0;i<nodes.length;i++){
+    for(let j=i+1;j<nodes.length;j++){
+      const dx=nodes[j].x-nodes[i].x,dy=nodes[j].y-nodes[i].y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<100){
+        const alpha=(100-d)/100*.25;
+        ctx.globalAlpha=alpha;
+        ctx.strokeStyle=`rgba(${nodes[i].hue},1)`;
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x,nodes[i].y);
+        /* L-shaped PCB traces */
+        if(Math.abs(dx)>Math.abs(dy)){
+          ctx.lineTo(nodes[j].x,nodes[i].y);
+          ctx.lineTo(nodes[j].x,nodes[j].y);
+        }else{
+          ctx.lineTo(nodes[i].x,nodes[j].y);
+          ctx.lineTo(nodes[j].x,nodes[j].y);
+        }
+        ctx.stroke();
+      }
+    }
+  }
+  nodes.forEach(n=>{
+    ctx.globalAlpha=n.active?.55:.15;
+    ctx.fillStyle=`rgba(${n.hue},1)`;
+    ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fill();
+    if(n.r>2.5){
+      ctx.globalAlpha=n.active?.18:.06;
+      ctx.strokeStyle=`rgba(${n.hue},1)`;ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r*2.8,0,Math.PI*2);ctx.stroke();
+    }
+  });
+  ctx.globalAlpha=1;requestAnimationFrame(drawCircuit);
+}
+drawCircuit();
+
+/* ---- SPEED LINES ---- */
+const sl=document.getElementById('speedLines');
+function makeSpeedLine(){
+  const el=document.createElement('div');
+  el.className='speed-line';
+  const top=Math.random()*100;
+  const width=80+Math.random()*200;
+  const duration=2+Math.random()*3;
+  const delay=Math.random()*5;
+  el.style.cssText=`top:${top}%;width:${width}px;animation-duration:${duration}s;animation-delay:${delay}s;`;
+  sl.appendChild(el);
+}
+for(let i=0;i<18;i++)makeSpeedLine();
+
+/* ---- TYPEWRITER ---- */
+const roles=[
+  'Embedded Systems Developer',
+  'IoT Engineer',
+  'ECE @ Sona College',
+  'Arduino &amp; 8051 Programmer',
+  'Hackathon Competitor',
+  'Antenna Design Enthusiast',
+  'NASSCOM Certified',
+  'F1 Enthusiast &amp; Engineer'
+];
+let ri=0,ci=0,del=false;
+const twEl=document.getElementById('tw');
+function type(){
+  const cur=roles[ri];
+  if(!del){
+    twEl.innerHTML=cur.slice(0,ci+1);ci++;
+    if(ci===cur.length){del=true;setTimeout(type,2400);return;}
+  }else{
+    twEl.innerHTML=cur.slice(0,ci-1);ci--;
+    if(ci===0){del=false;ri=(ri+1)%roles.length;}
+  }
+  setTimeout(type,del?48:105);
+}
+type();
+
+/* ---- SCROLL REVEAL ---- */
+const revEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:.06});
+revEls.forEach(el=>revObs.observe(el));
+
+/* ---- BAR ANIMATIONS ---- */
+const barObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.bar-fill').forEach(b=>{b.style.width=b.dataset.w;});
+      e.target.querySelectorAll('.cbf').forEach(b=>{b.style.height=b.dataset.h;});
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll('#academics').forEach(s=>barObs.observe(s));
+
+/* ---- COUNTER ---- */
+function animCount(el,target,dur=1600){
+  let st=null;
+  const isFloat=String(target).includes('.');
+  function step(ts){
+    if(!st)st=ts;
+    const p=Math.min((ts-st)/dur,1);
+    const val=isFloat?
+      (p*target).toFixed(2):
+      Math.floor(p*target)+(p>=1?'+':'');
+    el.textContent=val;
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+const cntObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('[data-target]').forEach(el=>animCount(el,+el.dataset.target));
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.stats-banner,#about').forEach(s=>cntObs.observe(s));
+
+/* ---- ACTIVE NAV ---- */
+const secs=document.querySelectorAll('section[id]');
+const navAs=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
+  navAs.forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});
+},{passive:true});
+
+/* ---- LIGHTBOX ---- */
+function openLB(id){
+  const img=document.getElementById(id);
+  document.getElementById('lb-img').src=img.src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLB(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB();});
+
+/* ---- CONTACT FORM ---- */
+function handleSubmit(btn){
+  const n=document.getElementById('cf-name').value.trim();
+  const e=document.getElementById('cf-email').value.trim();
+  if(!n||!e){
+    btn.innerHTML='<i class="fas fa-exclamation-circle"></i> Fill name &amp; email first!';
+    btn.style.background='#8b0000';
+    setTimeout(()=>{
+      btn.innerHTML='<i class="fas fa-paper-plane"></i> Send Message &rarr;';
+      btn.style.background='var(--red)';
+    },2500);
+    return;
+  }
+  btn.innerHTML='<i class="fas fa-check"></i> Message Sent! We\'ll Race Ahead!';
+  btn.style.background='#1a6b2a';
+  setTimeout(()=>{
+    btn.innerHTML='<i class="fas fa-paper-plane"></i> Send Message &rarr;';
+    btn.style.background='var(--red)';
+    ['cf-name','cf-email','cf-subj','cf-msg'].forEach(id=>{document.getElementById(id).value='';});
+  },3500);
+}
+
+/* ---- NAV SHADOW ON SCROLL ---- */
+window.addEventListener('scroll',()=>{
+  const nav=document.querySelector('nav');
+  nav.style.boxShadow=window.scrollY>50?'0 4px 24px rgba(204,0,0,0.08)':'';
+},{passive:true});
+</script>
+</body>
+</html>
