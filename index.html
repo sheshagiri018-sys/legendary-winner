@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Sheshagiri RB — ECE Engineer, Embedded Systems Enthusiast, IoT Developer"/>
+<title>Sheshagiri RB — ECE Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <div class="load-f1">
+    <div class="load-car">&#x1F3CE;&#xFE0F;</div>
+    <div class="load-name">SHESHAGIRI <span>RB</span></div>
+    <div class="load-sub">ECE Engineer · IoT Developer · F1 Enthusiast</div>
+    <div class="load-bar-wrap"><div class="load-bar-fill"></div></div>
+    <div class="load-speed">&#9654; LOADING PORTFOLIO...</div>
+  </div>
+</div>
+
+<!-- SCROLL PROGRESS -->
+<div id="scroll-progress"></div>
+
+<!-- CUSTOM CURSOR -->
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <span class="logo-flag">
+      <span class="flag-stripe fs1"></span>
+      <span class="flag-stripe fs2"></span>
+      <span class="flag-stripe fs3"></span>
+    </span>
+    SHESHAGIRI RB
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about"><span class="nav-number">01.</span>About</a></li>
+    <li><a href="#skills"><span class="nav-number">02.</span>Skills</a></li>
+    <li><a href="#projects"><span class="nav-number">03.</span>Projects</a></li>
+    <li><a href="#academics"><span class="nav-number">04.</span>Academics</a></li>
+    <li><a href="#achievements"><span class="nav-number">05.</span>Achievements</a></li>
+    <li><a href="#certifications"><span class="nav-number">06.</span>Certs</a></li>
+    <li><a href="#contact"><span class="nav-number">07.</span>Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about" onclick="closeMobile()">01. About</a>
+  <a href="#skills" onclick="closeMobile()">02. Skills</a>
+  <a href="#projects" onclick="closeMobile()">03. Projects</a>
+  <a href="#academics" onclick="closeMobile()">04. Academics</a>
+  <a href="#achievements" onclick="closeMobile()">05. Achievements</a>
+  <a href="#certifications" onclick="closeMobile()">06. Certifications</a>
+  <a href="#workshops" onclick="closeMobile()">07. Workshops</a>
+  <a href="#contact" onclick="closeMobile()">08. Contact</a>
+</div>
+
+<!-- SIDEBAR — vertical label -->
+<div class="sidebar">
+  <a href="mailto:sheshagiri018@gmail.com">sheshagiri018@gmail.com</a>
+</div>
+
+<!-- SOCIAL STRIP -->
+<div class="social-strip">
+  <a href="https://github.com/sheshagiri018-sys" target="_blank" rel="noopener">
+    <i class="fab fa-github"></i><span class="tip">GitHub</span>
+  </a>
+  <a href="https://www.linkedin.com/in/sheshagiri-r-b-96187b336" target="_blank" rel="noopener">
+    <i class="fab fa-linkedin-in"></i><span class="tip">LinkedIn</span>
+  </a>
+  <a href="https://leetcode.com/u/sheshagiri_018/" target="_blank" rel="noopener">
+    <i class="fas fa-code"></i><span class="tip">LeetCode</span>
+  </a>
+  <a href="https://www.hackerrank.com/profile/sheshagiri018" target="_blank" rel="noopener">
+    <i class="fab fa-hackerrank"></i><span class="tip">HackerRank</span>
+  </a>
+</div>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section id="hero">
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Carbon texture -->
+  <div class="hero-carbon"></div>
+
+  <!-- Speed lines -->
+  <div class="speed-lines" id="speedLines"></div>
+
+  <!-- Red glow -->
+  <div class="hero-glow"></div>
+
+  <!-- Big race number -->
+  <div class="hero-race-num">18</div>
+
+  <div class="hero-content">
+    <div class="hero-flag-strip">
+      <div class="hfs hfs-r"></div><div class="hfs hfs-r"></div>
+      <div class="hfs hfs-w"></div><div class="hfs hfs-w"></div>
+      <div class="hfs hfs-d"></div><div class="hfs hfs-d"></div>
+      <div class="hfs hfs-r"></div><div class="hfs hfs-r"></div>
+    </div>
+
+    <div class="hero-tag">ECE Engineer &amp; Builder</div>
+
+    <h1 class="hero-name">
+      SHESHAGIRI
+      <span class="surname">RB</span>
+    </h1>
+
+    <div class="hero-divider">
+      <div class="hd-line"></div>
+      <i class="hd-icon fas fa-flag-checkered"></i>
+      <div class="hd-line" style="background:linear-gradient(90deg,transparent,var(--red));"></div>
+    </div>
+
+    <div class="hero-title">// Role</div>
+    <div class="hero-role"><span class="tw" id="tw"></span></div>
+
+    <p class="hero-tagline">
+      Electronics &amp; Communication Engineering student at Sona College of Technology — 
+      bridging hardware and software through embedded systems, IoT, and real-world innovation.
+      Hackathon competitor. Prototype builder. F1 racing enthusiast.
+    </p>
+
+    <!-- Spec table — driver style -->
+    <div class="hero-specs">
+      <div class="spec-item">
+        <span class="spec-val">8.54</span>
+        <div class="spec-lbl">CGPA</div>
+      </div>
+      <div class="spec-item">
+        <span class="spec-val">3+</span>
+        <div class="spec-lbl">Projects</div>
+      </div>
+      <div class="spec-item">
+        <span class="spec-val">4+</span>
+        <div class="spec-lbl">Certs</div>
+      </div>
+    </div>
+
+    <!-- F1 Interest Badge -->
+    <div class="f1-badge">
+      <span class="f1-dot"></span>
+      F1 ENTHUSIAST — SPEED &amp; PRECISION IN CODE &amp; RACING
+    </div>
+
+    <div class="hero-btns" style="margin-top:1.5rem;">
+      <a href="#projects" class="btn-p">
+        <i class="fas fa-flag-checkered"></i> View Projects
+      </a>
+      <a href="#contact" class="btn-o">
+        <i class="fas fa-paper-plane"></i> Contact Me
+      </a>
+      <a href="https://github.com/sheshagiri018-sys" target="_blank" class="btn-s">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <div class="scroll-lbl">Scroll</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STATS BANNER
+     ============================================================ -->
+<div class="stats-banner">
+  <div class="stat-box">
+    <span class="num" data-target="3">0</span>
+    <div class="lbl">Projects Built</div>
+  </div>
+  <div class="stat-box">
+    <span class="num" data-target="4">0</span>
+    <div class="lbl">Certifications</div>
+  </div>
+  <div class="stat-box">
+    <span class="num" data-target="2">0</span>
+    <div class="lbl">Hackathons</div>
+  </div>
+  <div class="stat-box">
+    <span class="num" data-target="90">0</span>
+    <div class="lbl">HSC Percentage</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ABOUT
+     ============================================================ -->
+<section id="about">
+  <div class="about-grid">
+    <div class="photo-wrap reveal-left">
+      <div class="photo-frame">
+        <!-- Placeholder — replace with your actual photo -->
+        <img src="https://via.placeholder.com/300x360/141416/CC0000?text=S.RB" alt="Sheshagiri RB"/>
+        <div class="photo-corner pc-tl"></div>
+        <div class="photo-corner pc-tr"></div>
+        <div class="photo-corner pc-bl"></div>
+        <div class="photo-corner pc-br"></div>
+      </div>
+      <div class="photo-badge">ECE · 2024 &ndash; 2028</div>
+    </div>
+
+    <div class="about-details reveal reveal-delay-2">
+      <div class="sec-tag">01 — About Me</div>
+      <h2 class="sec-title">THE <span>DRIVER'S</span> BRIEF</h2>
+      <div class="sec-line"></div>
+
+      <p>I am a first-year Electronics and Communication Engineering student at Sona College of Technology, Salem — passionate about technology, embedded systems, IoT, and problem-solving. Like an F1 driver who obsesses over every millisecond, I obsess over every line of code and every circuit connection.</p>
+
+      <p>Driven by curiosity and a passion for bridging hardware and software, I actively participate in national hackathons, innovation competitions like ISMART, and national-level workshops at premier institutions like VIT Vellore.</p>
+
+      <div class="about-info">
+        <div class="info-item">
+          <span class="info-lbl">Full Name</span>
+          <span class="info-val">Sheshagiri RB</span>
+        </div>
+        <div class="info-item">
+          <span class="info-lbl">Institution</span>
+          <span class="info-val">Sona College of Technology</span>
+        </div>
+        <div class="info-item">
+          <span class="info-lbl">Degree</span>
+          <span class="info-val">B.E. ECE &mdash; 2024&ndash;2028</span>
+        </div>
+        <div class="info-item">
+          <span class="info-lbl">Current CGPA</span>
+          <span class="info-val">8.54 / 10.0</span>
+        </div>
+        <div class="info-item">
+          <span class="info-lbl">Location</span>
+          <span class="info-val">Salem, Tamil Nadu</span>
+        </div>
+        <div class="info-item">
+          <span class="info-lbl">Admission No.</span>
+          <span class="info-val">24ECEBE166</span>
+        </div>
+        <div class="info-item">
+          <span class="info-lbl">Email</span>
+          <span class="info-val">sheshagiri018@gmail.com</span>
+        </div>
+        <div class="info-item">
+          <span class="info-lbl">Phone</span>
+          <span class="info-val">+91 9698911653</span>
+        </div>
+      </div>
+
+      <div class="about-stats">
+        <div class="a-stat"><span class="num" data-target="3">0</span><span class="lbl">Projects</span></div>
+        <div class="a-stat"><span class="num" data-target="4">0</span><span class="lbl">Certifications</span></div>
+        <div class="a-stat"><span class="num" data-target="2">0</span><span class="lbl">Hackathons</span></div>
+        <div class="a-stat"><span class="num">8.54</span><span class="lbl">CGPA</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SKILLS
+     ============================================================ -->
+<section id="skills">
+  <div class="reveal">
+    <div class="sec-tag">02 — Skills</div>
+    <h2 class="sec-title">TECH <span>STACK</span></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-cat reveal reveal-delay-1">
+      <div class="skill-cat-title"><i class="fas fa-microchip"></i>&nbsp; Hardware &amp; Embedded</div>
+      <div class="skill-tags">
+        <span class="skill-tag">8051 Microcontroller</span>
+        <span class="skill-tag">Arduino</span>
+        <span class="skill-tag">ESP32</span>
+        <span class="skill-tag">IoT</span>
+        <span class="skill-tag">Printed Antennas</span>
+        <span class="skill-tag">Proteus</span>
+        <span class="skill-tag">Keil &micro;Vision</span>
+        <span class="skill-tag">Bluetooth Modules</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal reveal-delay-2">
+      <div class="skill-cat-title"><i class="fas fa-terminal"></i>&nbsp; Programming</div>
+      <div class="skill-tags">
+        <span class="skill-tag">C</span>
+        <span class="skill-tag">C++</span>
+        <span class="skill-tag">Embedded C</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">Assembly (8051 ALP)</span>
+        <span class="skill-tag">SQL / MySQL</span>
+        <span class="skill-tag">Data Structures</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal reveal-delay-1">
+      <div class="skill-cat-title"><i class="fas fa-tools"></i>&nbsp; Tools &amp; Software</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Git &amp; GitHub</span>
+        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">Arduino IDE</span>
+        <span class="skill-tag">MATLAB</span>
+        <span class="skill-tag">Simulink</span>
+        <span class="skill-tag">Linux</span>
+        <span class="skill-tag">EasyEDA</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal reveal-delay-2">
+      <div class="skill-cat-title"><i class="fas fa-wave-square"></i>&nbsp; ECE Core Skills</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Embedded Systems</span>
+        <span class="skill-tag">Digital Electronics</span>
+        <span class="skill-tag">Analog Communication</span>
+        <span class="skill-tag">Signal Processing</span>
+        <span class="skill-tag">VLSI Design</span>
+        <span class="skill-tag">Antenna Design</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal reveal-delay-1">
+      <div class="skill-cat-title"><i class="fas fa-chart-bar"></i>&nbsp; Data &amp; Visualization</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Data Processing</span>
+        <span class="skill-tag">Data Visualization</span>
+        <span class="skill-tag">Data Acquisition</span>
+        <span class="skill-tag">FutureSkills Prime</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal reveal-delay-2">
+      <div class="skill-cat-title"><i class="fas fa-language"></i>&nbsp; Languages Known</div>
+      <div class="skill-tags">
+        <span class="skill-tag">English (Intermediate)</span>
+        <span class="skill-tag">Tamil (Native)</span>
+        <span class="skill-tag">Japanese (Basic)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROJECTS
+     ============================================================ -->
+<section id="projects">
+  <div class="reveal">
+    <div class="sec-tag">03 — Projects</div>
+    <h2 class="sec-title">WHAT I'VE <span>BUILT</span></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="proj-grid">
+
+    <!-- PROJECT 1 — Footstep Energy -->
+    <div class="proj-card reveal reveal-delay-1">
+      <div class="proj-img proj-energy">
+        <div class="proj-illustration">
+          <svg class="proj-img-svg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Energy harvesting circuit illustration -->
+            <defs>
+              <filter id="glow1"><feGaussianBlur stdDeviation="3" result="c"/><feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <linearGradient id="eg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#CC0000" stop-opacity=".8"/><stop offset="100%" stop-color="#CC0000" stop-opacity=".1"/></linearGradient>
+            </defs>
+            <!-- Ground lines -->
+            <line x1="10" y1="160" x2="310" y2="160" stroke="#1E1E22" stroke-width="1"/>
+            <!-- Footstep shape -->
+            <ellipse cx="60" cy="90" rx="28" ry="40" fill="#1a0505" stroke="#CC0000" stroke-width="1.5" filter="url(#glow1)"/>
+            <ellipse cx="60" cy="55" rx="14" ry="18" fill="#1a0505" stroke="#CC0000" stroke-width="1" opacity=".6"/>
+            <!-- Piezo element -->
+            <rect x="115" y="70" width="50" height="30" rx="2" fill="#1a0505" stroke="#CC0000" stroke-width="1.5"/>
+            <line x1="125" y1="80" x2="155" y2="80" stroke="#CC0000" stroke-width="1" opacity=".6"/>
+            <line x1="125" y1="90" x2="155" y2="90" stroke="#CC0000" stroke-width="1" opacity=".6"/>
+            <text x="140" y="93" text-anchor="middle" font-family="monospace" font-size="7" fill="#CC0000" opacity=".7">PIEZO</text>
+            <!-- Arrow -->
+            <path d="M95 85 L110 85" stroke="#CC0000" stroke-width="1.5" marker-end="url(#arr1)" fill="none"/>
+            <!-- Energy bars -->
+            <rect x="200" y="100" width="14" height="60" fill="#1a0505" stroke="#333" stroke-width="1"/>
+            <rect x="200" y="115" width="14" height="45" fill="url(#eg1)"/>
+            <rect x="220" y="100" width="14" height="60" fill="#1a0505" stroke="#333" stroke-width="1"/>
+            <rect x="220" y="105" width="14" height="55" fill="url(#eg1)"/>
+            <rect x="240" y="100" width="14" height="60" fill="#1a0505" stroke="#333" stroke-width="1"/>
+            <rect x="240" y="120" width="14" height="40" fill="url(#eg1)"/>
+            <!-- IoT chip -->
+            <rect x="268" y="68" width="40" height="34" rx="3" fill="#1a0505" stroke="#CC0000" stroke-width="1.5" filter="url(#glow1)"/>
+            <text x="288" y="82" text-anchor="middle" font-family="monospace" font-size="7" fill="#CC0000">IoT</text>
+            <text x="288" y="93" text-anchor="middle" font-family="monospace" font-size="6" fill="#666">ESP32</text>
+            <!-- Connecting lines -->
+            <line x1="165" y1="85" x2="198" y2="85" stroke="#CC0000" stroke-width="1" opacity=".5" stroke-dasharray="3,3"/>
+            <line x1="256" y1="85" x2="268" y2="85" stroke="#CC0000" stroke-width="1" opacity=".5" stroke-dasharray="3,3"/>
+            <!-- WiFi signal -->
+            <path d="M300 48 Q306 42 312 48" stroke="#CC0000" stroke-width="1.5" fill="none" opacity=".4"/>
+            <path d="M297 44 Q306 36 315 44" stroke="#CC0000" stroke-width="1.2" fill="none" opacity=".25"/>
+            <circle cx="306" cy="52" r="2" fill="#CC0000" opacity=".6"/>
+            <!-- Labels -->
+            <text x="60" y="145" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">STEP</text>
+            <text x="140" y="115" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">TRANSDUCER</text>
+            <text x="228" y="175" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">POWER OUT</text>
+          </svg>
+        </div>
+        <div class="proj-overlay"></div>
+      </div>
+      <div class="proj-body">
+        <span class="proj-num">01</span>
+        <div class="proj-tag">IoT · Energy Harvesting · ISMART 2026</div>
+        <div class="proj-title">Footstep Energy Generation System</div>
+        <p class="proj-desc">Prototype selected for ISMART 2026 — harvests kinetic energy from footsteps using piezoelectric transducers, converting mechanical pressure into usable electrical energy for low-power IoT devices.</p>
+        <div class="tech-chips">
+          <span class="tc">Piezoelectric Sensors</span>
+          <span class="tc">Energy Harvesting</span>
+          <span class="tc">IoT</span>
+          <span class="tc">Circuit Design</span>
+          <span class="tc">ESP32</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/sheshagiri018-sys" target="_blank" class="proj-link"><i class="fab fa-github"></i> GitHub</a>
+          <a href="#" class="proj-link"><i class="fas fa-external-link-alt"></i> Details</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 2 — Printed Bluetooth Antenna -->
+    <div class="proj-card reveal reveal-delay-2">
+      <div class="proj-img proj-antenna">
+        <div class="proj-illustration">
+          <svg class="proj-img-svg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="glow2"><feGaussianBlur stdDeviation="3" result="c"/><feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <!-- PCB board -->
+            <rect x="70" y="40" width="180" height="120" rx="4" fill="#05101a" stroke="#1a4060" stroke-width="1.5"/>
+            <!-- Antenna trace — meandered patch -->
+            <path d="M110 80 L110 60 L210 60 L210 80 L130 80 L130 100 L210 100 L210 120 L110 120 L110 140 L210 140" 
+                  stroke="#CC0000" stroke-width="2.5" fill="none" filter="url(#glow2)" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Feed point -->
+            <circle cx="110" cy="110" r="5" fill="#CC0000" filter="url(#glow2)"/>
+            <rect x="88" y="106" width="22" height="8" rx="2" fill="#0a2030" stroke="#1a4060" stroke-width="1"/>
+            <!-- RF waves emanating -->
+            <path d="M240 90 Q254 80 268 90" stroke="#CC0000" stroke-width="1.5" fill="none" opacity=".6"/>
+            <path d="M240 100 Q260 84 280 100" stroke="#CC0000" stroke-width="1.2" fill="none" opacity=".4"/>
+            <path d="M240 110 Q266 88 292 110" stroke="#CC0000" stroke-width="1" fill="none" opacity=".25"/>
+            <!-- GND plane -->
+            <rect x="75" y="148" width="170" height="7" fill="#0a2030" stroke="#1a4060" stroke-width="1" opacity=".8"/>
+            <line x1="80" y1="151" x2="90" y2="155" stroke="#1a4060" stroke-width="1" opacity=".5"/>
+            <line x1="95" y1="151" x2="105" y2="155" stroke="#1a4060" stroke-width="1" opacity=".5"/>
+            <line x1="110" y1="151" x2="120" y2="155" stroke="#1a4060" stroke-width="1" opacity=".5"/>
+            <!-- Labels -->
+            <text x="160" y="175" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">GND PLANE</text>
+            <text x="265" y="76" text-anchor="middle" font-family="monospace" font-size="7" fill="#CC0000" opacity=".7">2.4GHz</text>
+            <text x="110" y="35" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">PRINTED PATCH ANTENNA</text>
+            <text x="265" y="120" text-anchor="middle" font-family="monospace" font-size="7" fill="#666">BT RF</text>
+          </svg>
+        </div>
+        <div class="proj-overlay"></div>
+      </div>
+      <div class="proj-body">
+        <span class="proj-num">02</span>
+        <div class="proj-tag">Antenna Design · VIT Vellore Workshop</div>
+        <div class="proj-title">Printed Bluetooth Antenna for IoT</div>
+        <p class="proj-desc">Hands-on design, fabrication and characterisation of a printed Bluetooth antenna for IoT applications — completed during the National Workshop at VIT Vellore's SENSE department in March 2026.</p>
+        <div class="tech-chips">
+          <span class="tc">Printed Antenna</span>
+          <span class="tc">Bluetooth RF</span>
+          <span class="tc">IoT</span>
+          <span class="tc">VIT Vellore</span>
+          <span class="tc">RF Characterization</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/sheshagiri018-sys" target="_blank" class="proj-link"><i class="fab fa-github"></i> GitHub</a>
+          <a href="#" class="proj-link"><i class="fas fa-external-link-alt"></i> Details</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 3 — SIH -->
+    <div class="proj-card reveal reveal-delay-3">
+      <div class="proj-img proj-hack">
+        <div class="proj-illustration">
+          <svg class="proj-img-svg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="glow3"><feGaussianBlur stdDeviation="3" result="c"/><feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <linearGradient id="hg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#CC0000"/><stop offset="100%" stop-color="#C9A84C"/></linearGradient>
+            </defs>
+            <!-- Central hub -->
+            <circle cx="160" cy="100" r="32" fill="#0d0a00" stroke="url(#hg1)" stroke-width="2" filter="url(#glow3)"/>
+            <text x="160" y="95" text-anchor="middle" font-family="monospace" font-size="9" fill="#CC0000" font-weight="bold">SIH</text>
+            <text x="160" y="108" text-anchor="middle" font-family="monospace" font-size="7" fill="#C9A84C">2025</text>
+            <!-- Team nodes -->
+            <circle cx="80" cy="55" r="18" fill="#0d0a00" stroke="#CC0000" stroke-width="1.2" opacity=".8"/>
+            <text x="80" y="52" text-anchor="middle" font-family="monospace" font-size="7" fill="#CC0000">ECE</text>
+            <text x="80" y="63" text-anchor="middle" font-family="monospace" font-size="6" fill="#666">TEAM</text>
+            <line x1="97" y1="67" x2="130" y2="80" stroke="#CC0000" stroke-width="1" opacity=".4" stroke-dasharray="4,3"/>
+            
+            <circle cx="240" cy="55" r="18" fill="#0d0a00" stroke="#CC0000" stroke-width="1.2" opacity=".8"/>
+            <text x="240" y="52" text-anchor="middle" font-family="monospace" font-size="7" fill="#CC0000">GOV</text>
+            <text x="240" y="63" text-anchor="middle" font-family="monospace" font-size="6" fill="#666">PROBLEM</text>
+            <line x1="223" y1="67" x2="190" y2="80" stroke="#CC0000" stroke-width="1" opacity=".4" stroke-dasharray="4,3"/>
+            
+            <circle cx="80" cy="148" r="18" fill="#0d0a00" stroke="#C9A84C" stroke-width="1.2" opacity=".8"/>
+            <text x="80" y="145" text-anchor="middle" font-family="monospace" font-size="6" fill="#C9A84C">ROUND</text>
+            <text x="80" y="156" text-anchor="middle" font-family="monospace" font-size="7" fill="#C9A84C">1 ✓</text>
+            <line x1="97" y1="138" x2="130" y2="118" stroke="#C9A84C" stroke-width="1" opacity=".5" stroke-dasharray="4,3"/>
+            
+            <circle cx="240" cy="148" r="18" fill="#0d0a00" stroke="#CC0000" stroke-width="1.2" opacity=".8"/>
+            <text x="240" y="145" text-anchor="middle" font-family="monospace" font-size="7" fill="#CC0000">72hr</text>
+            <text x="240" y="156" text-anchor="middle" font-family="monospace" font-size="6" fill="#666">SPRINT</text>
+            <line x1="222" y1="136" x2="192" y2="118" stroke="#CC0000" stroke-width="1" opacity=".4" stroke-dasharray="4,3"/>
+            <!-- National badge -->
+            <text x="160" y="185" text-anchor="middle" font-family="monospace" font-size="7" fill="#C9A84C" opacity=".7">★ NATIONAL LEVEL ★</text>
+          </svg>
+        </div>
+        <div class="proj-overlay"></div>
+      </div>
+      <div class="proj-body">
+        <span class="proj-num">03</span>
+        <div class="proj-tag">Hackathon · SIH 2025 · National Level</div>
+        <div class="proj-title">Smart India Hackathon — National Solution</div>
+        <p class="proj-desc">Participated in SIH 2025 at national level, clearing the first round. Developed an innovative engineering solution addressing a government problem statement in a cross-functional team under tight deadlines.</p>
+        <div class="tech-chips">
+          <span class="tc">Problem Solving</span>
+          <span class="tc">Rapid Prototyping</span>
+          <span class="tc">Team Collaboration</span>
+          <span class="tc">SIH 2025</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/sheshagiri018-sys" target="_blank" class="proj-link"><i class="fab fa-github"></i> GitHub</a>
+          <a href="#" class="proj-link"><i class="fas fa-external-link-alt"></i> Details</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     ACADEMICS
+     ============================================================ -->
+<section id="academics">
+  <div class="reveal">
+    <div class="sec-tag">04 — Academics</div>
+    <h2 class="sec-title">PERFORMANCE <span>DATA</span></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="acad-layout">
+    <div>
+      <div class="cgpa-box reveal">
+        <span class="cgpa-num">8.54</span>
+        <div class="cgpa-lbl">Current CGPA &nbsp;&middot;&nbsp; Sona College of Technology &nbsp;&middot;&nbsp; ECE</div>
+      </div>
+      <div class="sem-chart reveal">
+        <div class="sem-chart-title">Academic Milestones</div>
+        <div class="chart-bars">
+          <div class="cbw">
+            <div class="cb-val">8.54</div>
+            <div class="cb"><div class="cbf" style="height:0%" data-h="85.4%"></div></div>
+            <div class="cb-lbl">Sem 1&ndash;2</div>
+          </div>
+          <div class="cbw">
+            <div class="cb-val">8.54</div>
+            <div class="cb"><div class="cbf" style="height:0%" data-h="85.4%"></div></div>
+            <div class="cb-lbl">Current</div>
+          </div>
+          <div class="cbw">
+            <div class="cb-val">90%</div>
+            <div class="cb"><div class="cbf" style="height:0%" data-h="90%"></div></div>
+            <div class="cb-lbl">HSC 12th</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="sec-tag" style="margin-bottom:1.25rem;">Key Subjects — Current Semester</div>
+      <div class="subj-bars">
+        <div class="subj-item">
+          <div class="subj-hdr"><span class="subj-name">Microprocessors &amp; Microcontrollers</span><span class="subj-score">A+</span></div>
+          <div class="bar-track"><div class="bar-fill" data-w="92%"></div></div>
+        </div>
+        <div class="subj-item">
+          <div class="subj-hdr"><span class="subj-name">Digital Signal Processing</span><span class="subj-score">A</span></div>
+          <div class="bar-track"><div class="bar-fill" data-w="80%"></div></div>
+        </div>
+        <div class="subj-item">
+          <div class="subj-hdr"><span class="subj-name">VLSI Design</span><span class="subj-score">A+</span></div>
+          <div class="bar-track"><div class="bar-fill" data-w="86%"></div></div>
+        </div>
+        <div class="subj-item">
+          <div class="subj-hdr"><span class="subj-name">Communication Systems</span><span class="subj-score">A</span></div>
+          <div class="bar-track"><div class="bar-fill" data-w="82%"></div></div>
+        </div>
+        <div class="subj-item">
+          <div class="subj-hdr"><span class="subj-name">Python Programming</span><span class="subj-score">A+</span></div>
+          <div class="bar-track"><div class="bar-fill" data-w="89%"></div></div>
+        </div>
+        <div class="subj-item">
+          <div class="subj-hdr"><span class="subj-name">Data Structures (C++)</span><span class="subj-score">A</span></div>
+          <div class="bar-track"><div class="bar-fill" data-w="78%"></div></div>
+        </div>
+      </div>
+      <div class="acad-note">
+        &#9733; Department Top 10 &mdash; 2025<br>
+        Consistently ranked among the top students in ECE with a CGPA of 8.54/10.0
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ACHIEVEMENTS
+     ============================================================ -->
+<section id="achievements">
+  <div class="reveal">
+    <div class="sec-tag">05 — Achievements</div>
+    <h2 class="sec-title">RACE <span>PODIUM</span></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-date">March 2026</div>
+      <div class="tl-title">VIT Vellore &mdash; National Workshop Participant</div>
+      <p class="tl-desc">Participated in the One-Day National Workshop on Design, Fabrication and Characterization of Printed Bluetooth Antenna for IoT Application organized by SENSE, VIT Vellore. Gained hands-on experience in RF antenna fabrication.</p>
+      <span class="tl-badge">Workshop</span>
+    </div>
+    <div class="tl-item reveal reveal-delay-1">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2026</div>
+      <div class="tl-title">ISMART 2026 &mdash; Prototype Presenter</div>
+      <p class="tl-desc">Developed and presented a prototype on &ldquo;Footstep Energy Generation&rdquo; at ISMART 2026 — designed a complete energy harvesting circuit using piezoelectric transducers to power embedded IoT systems.</p>
+      <span class="tl-badge">Innovation</span>
+    </div>
+    <div class="tl-item reveal reveal-delay-2">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2025</div>
+      <div class="tl-title">Smart India Hackathon 2025 &mdash; National Level</div>
+      <p class="tl-desc">Participated at national level in SIH 2025, clearing the first round by delivering an innovative engineering solution to a government-issued problem statement under a tight deadline.</p>
+      <span class="tl-badge">Hackathon</span>
+    </div>
+    <div class="tl-item reveal reveal-delay-3">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2025</div>
+      <div class="tl-title">Department Top 10 &mdash; Academic Excellence</div>
+      <p class="tl-desc">Ranked in the top 10 of the ECE department at Sona College of Technology with a CGPA of 8.54/10.0, demonstrating consistent academic performance across core engineering subjects.</p>
+      <span class="tl-badge">Academic</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CERTIFICATIONS
+     ============================================================ -->
+<section id="certifications">
+  <div class="reveal">
+    <div class="sec-tag">06 — Certifications</div>
+    <h2 class="sec-title">RACE <span>LICENCES</span></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="cert-grid">
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-icon"><i class="fas fa-lightbulb"></i></div>
+      <div class="cert-issuer">NPTEL &mdash; Elite Certificate</div>
+      <div class="cert-title">Design Thinking</div>
+      <div class="cert-date">Completed &middot; Certificate of Excellence</div>
+      <div class="cert-expand-hint">Problem-solving · Innovation process · Empathy mapping &rarr;</div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-icon"><i class="fas fa-globe"></i></div>
+      <div class="cert-issuer">NASSCOM &mdash; FutureSkills Prime</div>
+      <div class="cert-title">Digital 101 Course</div>
+      <div class="cert-date">Certified &middot; Digital technologies &amp; emerging trends</div>
+      <div class="cert-expand-hint">Industry-aligned digital skills &rarr;</div>
+    </div>
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-icon"><i class="fas fa-database"></i></div>
+      <div class="cert-issuer">NASSCOM &mdash; IT-ITeS SSC</div>
+      <div class="cert-title">Data Processing &amp; Visualization</div>
+      <div class="cert-date">06 February 2026 &middot; Certificate of Completion</div>
+      <div class="cert-expand-hint">Data pipelines · Visualization tools &rarr;</div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-icon"><i class="fas fa-satellite"></i></div>
+      <div class="cert-issuer">NASSCOM &mdash; IT-ITeS SSC</div>
+      <div class="cert-title">Acquiring Data</div>
+      <div class="cert-date">22 March 2026 &middot; Certificate of Completion</div>
+      <div class="cert-expand-hint">Data acquisition · Sensors · Digital standards &rarr;</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WORKSHOPS
+     ============================================================ -->
+<section id="workshops">
+  <div class="reveal">
+    <div class="sec-tag">07 — Workshops &amp; Events</div>
+    <h2 class="sec-title">LEARNING <span>BEYOND</span> CLASS</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="ws-grid">
+    <div class="ws-card reveal reveal-delay-1">
+      <div class="ws-type">National Workshop &mdash; VIT Vellore</div>
+      <div class="ws-title">Printed Bluetooth Antenna Design for IoT</div>
+      <p class="ws-meta">Organiser: SENSE, VIT Vellore &middot; Topics: Antenna design, fabrication, RF characterisation, IoT applications, Bluetooth communication</p>
+      <div class="ws-date">March 07, 2026</div>
+    </div>
+    <div class="ws-card reveal reveal-delay-2">
+      <div class="ws-type">NASSCOM &mdash; FutureSkills Prime</div>
+      <div class="ws-title">Data Processing and Visualisation</div>
+      <p class="ws-meta">Platform: IT-ITeS SSC Nasscom &middot; Topics: Data pipelines, visualisation tools, industry-aligned digital skills</p>
+      <div class="ws-date">06 February 2026</div>
+    </div>
+    <div class="ws-card reveal reveal-delay-3">
+      <div class="ws-type">NASSCOM &mdash; FutureSkills Prime</div>
+      <div class="ws-title">Acquiring Data</div>
+      <p class="ws-meta">Platform: IT-ITeS SSC Nasscom &middot; Topics: Data acquisition methods, sensors, digital data collection standards</p>
+      <div class="ws-date">22 March 2026</div>
+    </div>
+    <div class="ws-card reveal reveal-delay-1">
+      <div class="ws-type">National Hackathon</div>
+      <div class="ws-title">Smart India Hackathon 2025</div>
+      <p class="ws-meta">Level: National &middot; Result: Round 1 Cleared &middot; Cross-functional team, engineering problem-solving</p>
+      <div class="ws-date">2025</div>
+    </div>
+    <div class="ws-card reveal reveal-delay-2">
+      <div class="ws-type">Innovation Competition</div>
+      <div class="ws-title">ISMART 2026</div>
+      <p class="ws-meta">Topic: Footstep Energy Generation &middot; Prototype developed &amp; selected for presentation &middot; Renewable energy domain</p>
+      <div class="ws-date">2026</div>
+    </div>
+    <div class="ws-card reveal reveal-delay-3">
+      <div class="ws-type">Arduino &amp; IoT Workshop</div>
+      <div class="ws-title">Arduino and IoT Applications</div>
+      <p class="ws-meta">Topics: Arduino programming, IoT implementation, Bluetooth &amp; signal receiver integration, hands-on embedded projects</p>
+      <div class="ws-date">2024–2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CODING PROFILES
+     ============================================================ -->
+<section id="coding">
+  <div class="reveal">
+    <div class="sec-tag">08 — Coding Profiles</div>
+    <h2 class="sec-title">FIND ME <span>ON</span></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="coding-grid">
+    <a href="https://github.com/sheshagiri018-sys" target="_blank" rel="noopener" class="code-card reveal reveal-delay-1">
+      <i class="fab fa-github code-icon"></i>
+      <div class="code-platform">GitHub</div>
+      <div class="code-user">sheshagiri018-sys</div>
+    </a>
+    <a href="https://www.linkedin.com/in/sheshagiri-r-b-96187b336" target="_blank" rel="noopener" class="code-card reveal reveal-delay-2">
+      <i class="fab fa-linkedin-in code-icon"></i>
+      <div class="code-platform">LinkedIn</div>
+      <div class="code-user">sheshagiri-r-b-96187b336</div>
+    </a>
+    <a href="https://leetcode.com/u/sheshagiri_018/" target="_blank" rel="noopener" class="code-card reveal reveal-delay-3">
+      <i class="fas fa-code code-icon"></i>
+      <div class="code-platform">LeetCode</div>
+      <div class="code-user">sheshagiri_018</div>
+    </a>
+    <a href="https://www.hackerrank.com/profile/sheshagiri018" target="_blank" rel="noopener" class="code-card reveal reveal-delay-4">
+      <i class="fab fa-hackerrank code-icon"></i>
+      <div class="code-platform">HackerRank</div>
+      <div class="code-user">sheshagiri018</div>
+    </a>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<section id="contact">
+  <div class="contact-layout">
+    <div class="reveal">
+      <div class="sec-tag">09 — Contact</div>
+      <div class="contact-big">
+        LET'S<br>
+        <span>CONNECT</span>
+      </div>
+      <div class="contact-info">
+        <div class="ci">
+          <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+          <div class="ci-detail">
+            <span class="ci-type">Email</span>
+            <span class="ci-val">sheshagiri018@gmail.com</span>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-icon"><i class="fas fa-phone"></i></div>
+          <div class="ci-detail">
+            <span class="ci-type">Phone</span>
+            <span class="ci-val">+91 9698911653</span>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="ci-detail">
+            <span class="ci-type">Address</span>
+            <span class="ci-val">75, Periya Thambi Garden, Perumal Malai Adivaram, Reddiyur, Salem, Tamil Nadu</span>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-icon"><i class="fas fa-graduation-cap"></i></div>
+          <div class="ci-detail">
+            <span class="ci-type">Institution</span>
+            <span class="ci-val">Sona College of Technology, Salem<br>B.E. ECE &middot; 2024&ndash;2028</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-socials">
+        <a href="https://github.com/sheshagiri018-sys" target="_blank" class="contact-social-btn"><i class="fab fa-github"></i> GitHub</a>
+        <a href="https://www.linkedin.com/in/sheshagiri-r-b-96187b336" target="_blank" class="contact-social-btn"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+        <a href="https://leetcode.com/u/sheshagiri_018/" target="_blank" class="contact-social-btn"><i class="fas fa-code"></i> LeetCode</a>
+        <a href="https://www.hackerrank.com/profile/sheshagiri018" target="_blank" class="contact-social-btn"><i class="fab fa-hackerrank"></i> HackerRank</a>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="cf">
+        <div class="cf-field">
+          <label class="cf-lbl">Name</label>
+          <input type="text" class="cf-input" placeholder="Your full name" id="cf-name"/>
+        </div>
+        <div class="cf-field">
+          <label class="cf-lbl">Email</label>
+          <input type="email" class="cf-input" placeholder="your@email.com" id="cf-email"/>
+        </div>
+        <div class="cf-field">
+          <label class="cf-lbl">Subject</label>
+          <input type="text" class="cf-input" placeholder="Internship / Collaboration / Query" id="cf-subj"/>
+        </div>
+        <div class="cf-field">
+          <label class="cf-lbl">Message</label>
+          <textarea class="cf-input" placeholder="Tell me about your opportunity..." id="cf-msg"></textarea>
+        </div>
+        <button class="cf-submit" onclick="handleSubmit(this)">
+          <i class="fas fa-paper-plane"></i> Send Message &rarr;
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button class="lb-close" onclick="closeLB()"><i class="fas fa-times"></i></button>
+  <img id="lb-img" src="" alt="Certificate"/>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">SHESHAGIRI <span>RB</span></div>
+  <div class="footer-note">B.E. ECE &middot; Sona College of Technology &middot; Salem &middot; 2024&ndash;2028</div>
+  <div class="footer-links">
+    <a href="https://github.com/sheshagiri018-sys" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="https://www.linkedin.com/in/sheshagiri-r-b-96187b336" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://leetcode.com/u/sheshagiri_018/" target="_blank"><i class="fas fa-code"></i></a>
+    <a href="https://www.hackerrank.com/profile/sheshagiri018" target="_blank"><i class="fab fa-hackerrank"></i></a>
+  </div>
+  <div class="footer-note">&copy; 2026 &middot; Crafted with <span style="color:var(--red)">&#9829;</span> &amp; passion &mdash; Speed. Precision. Engineering.</div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script src="script.js" defer></script>
+</body>
+</html>
