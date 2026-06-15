@@ -18,7 +18,7 @@ I decided to completely redesign my previous portfolio into a **high-performance
 
 ---
 
-## 🎨 Theme Inspiration
+## 🎨 Theme Inspiration🌷
 
 This website is inspired by **Formula 1 racing aesthetics**, focusing on:
 
