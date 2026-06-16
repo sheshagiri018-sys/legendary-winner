@@ -7,7 +7,7 @@ This project represents a major evolution from my previous basic portfolio into 
 
 ---
 
-## 🏆 Project Transformation
+## 🏆 Project Transformation!
 
 I decided to completely redesign my previous portfolio into a **high-performance, racing-inspired interface**, symbolizing:
 
