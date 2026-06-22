@@ -77,7 +77,7 @@ Through this upgrade, I improved in:
 
 ---
 
-## 🔥 Why This Upgrade?
+## 🔥 Why This Upgrade?💨
 
 This was not just a redesign — it was a **complete experience transformation**.
 
@@ -97,7 +97,7 @@ It reflects my journey of:
 
 ## 🚀 Future Vision
 
-Next upgrades may include:
+Next upgrades may include:👑
 
 * 🏎️ Even more advanced animations (GSAP / Three.js)
 * 🧠 AI-based interactive elements
