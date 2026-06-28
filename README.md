@@ -22,11 +22,11 @@ I decided to completely redesign my previous portfolio into a **high-performance
 
 This website is inspired by **Formula 1 racing aesthetics**, focusing on:
 
-* 🔴 Red racing UI theme
-* 🏎️ Speed and motion-based animations
-* 🏁 Track-inspired layouts
-* ⚡ High-energy transitions
-* 🧭 Dynamic scrolling experience
+* 🔴 Red racing UI theme.
+* 🏎️ Speed and motion-based animations.
+* 🏁 Track-inspired layouts.
+* ⚡ High-energy transitions.
+* 🧭 Dynamic scrolling experience.
 
 The goal was to make the portfolio feel like a **fast-moving digital racing experience** rather than a static website.
 
