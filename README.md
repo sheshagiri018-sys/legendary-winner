@@ -32,7 +32,7 @@ The goal was to make the portfolio feel like a **fast-moving digital racing expe
 
 ---
 
-## ✨ Key Features
+## ✨ Key Features👑🌠
 
 * 🏎️ F1-themed UI/UX design
 * 🔥 Smooth animations and transitions
